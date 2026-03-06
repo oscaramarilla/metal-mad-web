@@ -1,29 +1,63 @@
+"use client";
+
 import './globals.css';
-import Link from 'next/link'; // <-- Aquí traemos el componente Link de Next.js
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
   return (
     <html lang="es">
       <body className="relative min-h-screen bg-zinc-50">
 
-        {/* 🔵 MENÚ DE NAVEGACIÓN SUPERIOR 🔵 */}
-        <nav className="bg-white shadow-sm border-b border-zinc-200 px-8 py-4 sticky top-0 z-40">
+        {/* 🔵 MENÚ DE NAVEGACIÓN 🔵 */}
+        <nav className="bg-white shadow-sm border-b border-zinc-200 px-6 py-4 sticky top-0 z-40">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
+            
             {/* Logo a la izquierda */}
-            <Link href="/ayc" className="text-3xl font-black text-blue-600 tracking-tighter hover:scale-105 transition-transform">
+            <Link href="/ayc" className="text-3xl font-black text-blue-600 tracking-tighter">
               MM<span className="text-orange-500">.</span>
             </Link>
 
-            {/* Enlaces a la derecha */}
-            <div className="flex gap-6 font-semibold text-zinc-600">
+            {/* 📱 BOTÓN HAMBURGUESA (Solo visible en celulares) */}
+            <button
+              className="md:hidden text-zinc-600 p-2 focus:outline-none"
+              onClick={() => setMenuAbierto(!menuAbierto)}
+              aria-label="Abrir menú"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {menuAbierto ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+
+            {/* 💻 ENLACES VERSIÓN ESCRITORIO */}
+            <div className="hidden md:flex gap-6 font-semibold text-zinc-600">
               <Link href="/ayc" className="hover:text-blue-600 transition-colors">Inicio</Link>
               <Link href="/Mobiliario" className="hover:text-blue-600 transition-colors">Mobiliario</Link>
-              <Link href="/Plasticos" className="hover:text-blue-600 transition-colors">Plásticos</Link>
+              <Link href="/Calculadora" className="hover:text-blue-600 transition-colors">Calculadora</Link>
+              <Link href="/catalogo" className="hover:text-blue-600 transition-colors">Catálogo</Link>
+              <Link href="/MoviAula" className="hover:text-blue-600 transition-colors">MoviAula</Link>
             </div>
           </div>
+
+          {/* 📱 MENÚ DESPLEGABLE VERSIÓN CELULAR */}
+          {menuAbierto && (
+            <div className="md:hidden mt-4 flex flex-col gap-4 font-semibold text-zinc-600 bg-white pb-4 border-t border-zinc-100 pt-4 shadow-lg absolute w-full left-0 px-6">
+              <Link href="/ayc" onClick={() => setMenuAbierto(false)} className="block py-2 hover:text-blue-600">Inicio</Link>
+              <Link href="/Mobiliario" onClick={() => setMenuAbierto(false)} className="block py-2 hover:text-blue-600">Mobiliario</Link>
+              <Link href="/Calculadora" onClick={() => setMenuAbierto(false)} className="block py-2 hover:text-blue-600">Calculadora</Link>
+              <Link href="/catalogo" onClick={() => setMenuAbierto(false)} className="block py-2 hover:text-blue-600">Catálogo</Link>
+              <Link href="/MoviAula" onClick={() => setMenuAbierto(false)} className="block py-2 hover:text-blue-600">MoviAula</Link>
+            </div>
+          )}
         </nav>
 
-        {/* Aquí adentro Next.js inyecta tus páginas (como la de las 3 columnas) */}
+        {/* Aquí se inyectan tus páginas */}
         <main className="max-w-7xl mx-auto">
           {children}
         </main>
