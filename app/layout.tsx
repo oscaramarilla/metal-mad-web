@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* 🟢 BOTÓN FLOTANTE DE WHATSAPP 🟢 */}
         <a
-          href="https://wa.me/595900000000?text=Hola,%20vengo%20de%20la%20web%20y%20me%20gustaría%20más%20información."
+          href="https://wa.me/595982451828?text=Hola,%20vengo%20de%20la%20web%20y%20me%20gustaría%20más%20información."
           target="_blank"
           rel="noopener noreferrer"
           className="fixed bottom-6 left-6 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 z-50 flex items-center justify-center"
