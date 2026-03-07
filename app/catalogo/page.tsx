@@ -25,7 +25,7 @@ export default function CatalogoPage() {
           <h2 className="text-2xl font-bold text-zinc-900 mb-2">Catálogo B2B 2026</h2>
           <p className="text-zinc-600 mb-6">Archivo PDF con medidas, modelos y especificaciones técnicas.</p>
           
-          {/* OJO: Aquí le decimos que descargue el archivo "catalogo.pdf" de la carpeta public */}
+          {/* OJO: Aquí le corregimos el nombre para que busque "catalogo.pdf" */}
           <a 
             href="/catalogo.pdf" 
             download="Catalogo_MetalMadeas.pdf"
