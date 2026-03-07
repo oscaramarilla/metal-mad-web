@@ -9,6 +9,7 @@ const links = [
   { href: "/Calculadora", label: "Calculadora" },
   { href: "/catalogo",    label: "Catálogo" },
   { href: "/MoviAula",    label: "MoviAula" },
+  { href: "/Nosotros",    label: "Nosotros" }, // 👈 Agregado aquí
 ];
 
 export default function Navbar() {
@@ -50,7 +51,6 @@ export default function Navbar() {
             </Link>
           ))}
           
-          {/* SOLUCIÓN 1: Se agregó el <a inicial y se cerró con > */}
           <a
             href="https://wa.me/595982451828?text=Hola,%20vengo%20de%20la%20web"
             target="_blank"
@@ -76,7 +76,6 @@ export default function Navbar() {
             </Link>
           ))}
           
-          {/* SOLUCIÓN 2: Se agregó el <a inicial y se cerró con > */}
           <a
             href="https://wa.me/595982451828?text=Hola,%20vengo%20de%20la%20web"
             target="_blank"
