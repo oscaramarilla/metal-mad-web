@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css"; // ¡ESTA LÍNEA ES VITAL PARA LOS ESTILOS!
 import Navbar from "./components/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next"; // <-- Medidor de velocidad de Vercel
 
 export const metadata: Metadata = {
   title: "MetalMadeas | Mobiliario Escolar",
@@ -10,13 +11,25 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className="bg-zinc-50 text-zinc-900 antialiased">
+      {/* Aplicamos el fondo gris plata metálico (zinc-200) y blindamos contra el modo oscuro */}
+      <body className="bg-zinc-200 text-zinc-900 antialiased">
         <Navbar />
         
         {/* Agregamos padding superior para que el Navbar fijo no tape el contenido */}
-        <main className="max-w-7xl mx-auto px-6 py-12 min-h-screen">
-          {children}
+        <main className="max-w-7xl mx-auto px-6 py-12 min-h-screen"> 
+          {children} {/* MINI BOTÓN FLOTANTE IZQUIERDO */}
+        <a 
+          href="/MoviAula" 
+          className="fixed left-0 bottom-10 bg-blue-800 text-white p-3 sm:px-4 sm:py-3 rounded-r-xl shadow-2xl z-50 flex items-center gap-2 hover:bg-blue-700 hover:pr-6 transition-all border-y border-r border-blue-600 group"
+          title="Calculadora de Presupuestos"
+        >
+          <span className="text-2xl">🧮</span>
+          <span className="font-bold hidden sm:block text-sm group-hover:block">Calculadora</span>
+        </a>
         </main>
+
+        {/* Analíticas de rendimiento de Vercel activadas */}
+        <SpeedInsights />
 
         {/* Botón flotante de WhatsApp mejorado */}
         <a 
@@ -34,4 +47,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
