@@ -12,12 +12,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* El modo oscuro fue eliminado de aquí para que respete tu diseño B2B */
 
 body {
   background: var(--background);
