@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { Metadata } from "next";
+import Image from "next/image";
 
-// 🧠 1. EL CEREBRO SEO: Esto es lo que lee Google antes de mostrar la página
+// 🧠 1. EL CEREBRO SEO: Solo un export const metadata en todo el archivo.
 export const metadata: Metadata = {
-  title: "Fábrica de Mobiliario Escolar en Paraguay | Pupitres y Mesas",
-  description: "Fabricantes directos de pupitres escolares, mesas y sillas para alumnos en Paraguay. Capacidad industrial exclusiva para colegios y licitaciones.",
+  title: "Fábrica de Mobiliario Escolar en Paraguay | Metal Mad",
+  description: "Fabricantes directos de pupitres escolares, mesas y sillas para alumnos en Paraguay. Capacidad industrial exclusiva para colegios y licitaciones. Representantes de Oriplast.",
   keywords: ["mobiliario escolar paraguay", "pupitre escolar", "mesas y sillas para alumnos", "muebles para colegio", "fábrica mobiliario B2B"],
 };
 
@@ -50,7 +50,7 @@ export default function Home() {
           <div className="relative w-full max-w-md aspect-[4/3]">
             <Image
               src="/productos/pupitre.jpg"
-              alt="Pupitre escolar y silla para alumno fabricado por MetalMadeas en Asunción"
+              alt="Pupitre escolar y silla para alumno fabricado por Metal Mad en Asunción"
               fill
               className="rounded-xl shadow-2xl object-cover"
               priority
@@ -75,6 +75,32 @@ export default function Home() {
           <p className="text-zinc-700">Trato directo sin intermediarios, optimizando el presupuesto de tu institución educativa.</p>
         </div>
       </section>
+
+      {/* SECCIÓN SEO CORPORATIVA (Inyectada directamente aquí) */}
+      <section className="max-w-6xl mx-auto px-6 mt-12 mb-16 w-full">
+        <div className="bg-zinc-900 rounded-[2.5rem] p-10 md:p-16 text-zinc-300 shadow-2xl">
+          <h2 className="text-3xl font-black text-white mb-6">Líderes en Fabricación de Pupitres Escolares en Paraguay</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="space-y-4 text-sm leading-relaxed">
+              <p>
+                Metal Mad E.A.S. se ha consolidado como la fábrica de referencia para directores de colegios, universidades y contratistas del Estado. Nuestra misión es elevar el estándar del <strong>mobiliario escolar en Paraguay</strong>, reemplazando las opciones obsoletas y frágiles por tecnología de inyección plástica de última generación.
+              </p>
+              <p>
+                Ofrecemos un catálogo completo de <strong>mesas y sillas para alumnos</strong>, sistemas MoviAula modulares y pupitres universitarios. Todo fabricado localmente con acero reforzado y ensamblado con componentes de clase mundial.
+              </p>
+            </div>
+            <div className="space-y-4 text-sm leading-relaxed">
+              <p>
+                <strong>Exclusividad y Respaldo B2B:</strong> Como distribuidores exclusivos de <strong>ORIPLAST</strong>, garantizamos el suministro legal y continuo de componentes plásticos para metalúrgicas aliadas en todo el territorio nacional, blindando sus ofertas para licitaciones públicas.
+              </p>
+              <p>
+                Entendemos que comprar <strong>muebles para aulas</strong> no es un gasto, es una inversión en la educación de las futuras generaciones. Utiliza nuestro cotizador inteligente y obtén un presupuesto transparente, directo de fábrica y con entrega a nivel nacional.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
