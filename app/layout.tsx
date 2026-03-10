@@ -3,9 +3,13 @@ import "./globals.css"; // ¡ESTA LÍNEA ES VITAL PARA LOS ESTILOS!
 import Navbar from "./components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next"; // <-- Medidor de velocidad de Vercel
 
+// 🧠 AQUÍ ESTÁ LA LLAVE DE GOOGLE SEARCH CONSOLE
 export const metadata: Metadata = {
   title: "MetalMadeas | Mobiliario Escolar",
   description: "Fabricación Nacional - Calidad Industrial",
+  verification: {
+    google: "ZYNVby0FFvKH1CsUb-ZKOZ3Oa7v1Wsd9zWPK_Gcpo2M",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,7 +21,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         
         {/* Agregamos padding superior para que el Navbar fijo no tape el contenido */}
         <main className="max-w-7xl mx-auto px-6 py-12 min-h-screen"> 
-          {children} {/* MINI BOTÓN FLOTANTE IZQUIERDO */}
+          {children} 
+        </main>
+
+        {/* MINI BOTÓN FLOTANTE IZQUIERDO */}
         <a 
           href="/MoviAula" 
           className="fixed left-0 bottom-10 bg-blue-800 text-white p-3 sm:px-4 sm:py-3 rounded-r-xl shadow-2xl z-50 flex items-center gap-2 hover:bg-blue-700 hover:pr-6 transition-all border-y border-r border-blue-600 group"
@@ -26,7 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <span className="text-2xl">🧮</span>
           <span className="font-bold hidden sm:block text-sm group-hover:block">Calculadora</span>
         </a>
-        </main>
 
         {/* Analíticas de rendimiento de Vercel activadas */}
         <SpeedInsights />
