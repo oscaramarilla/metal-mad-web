@@ -1,102 +1,107 @@
-import { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Mobiliario Escolar y Cotizador B2B | Metal Mad",
-  description: "Explora nuestras líneas de mobiliario escolar y genera tu presupuesto en PDF al instante con nuestro asesor virtual.",
-};
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
-export default function MobiliarioPage() {
+  // 🧠 Base de datos de tus enlaces. Si quieres agregar uno nuevo, solo ponlo aquí y aparecerá en PC y Celular.
+  const links = [
+    { name: "Inicio", href: "/" },
+    { name: "Mobiliario", href: "/Mobiliario" },
+    { name: "MoviAula", href: "/MoviAula" },
+    { name: "Blog", href: "/blog" },
+    { name: "Impacto Social", href: "/impacto-social", special: true },
+  ];
+
   return (
-    <div className="min-h-screen bg-zinc-50 font-sans pb-20 pt-16">
-      <div className="max-w-6xl mx-auto px-6">
-        
-        <header className="text-center mb-16">
-          <span className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4 block">
-            Catálogo y Presupuestos
-          </span>
-          <h1 className="text-4xl md:text-5xl font-black text-zinc-900 mb-6">
-            Líneas de Mobiliario Escolar
-          </h1>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
-            Navega por nuestras líneas inyectadas y pide a nuestro asesor inteligente que te redacte un presupuesto formal en formato PDF al instante.
-          </p>
-        </header>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <nav className="bg-white shadow-md w-full sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between h-20 items-center">
           
-          {/* COLUMNA IZQUIERDA: Resumen del Catálogo */}
-          <div className="flex flex-col gap-6">
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-200">
-              <span className="bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Más Vendido</span>
-              <h3 className="text-2xl font-bold text-blue-900 mb-2">Línea Iso ORIPLAST</h3>
-              <p className="text-zinc-600 mb-4">Pupitre ergonómico inyectado. Máxima resistencia para alto tránsito con estructura metálica tratada.</p>
-              <div className="text-xl font-black text-zinc-900">Gs. 285.000 <span className="text-sm text-zinc-500 font-normal">/ unid.</span></div>
-            </div>
+          {/* Logo */}
+          <div className="flex-shrink-0 flex items-center">
+            <Link href="/" className="text-3xl font-black text-blue-900 tracking-tighter">
+              MM<span className="text-blue-600">.</span>
+            </Link>
+            <span className="ml-2 text-xs font-bold text-zinc-400 tracking-widest uppercase hidden sm:block">
+              Metal Mad
+            </span>
+          </div>
 
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-200 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">PREMIUM</div>
-              <h3 className="text-2xl font-bold text-blue-900 mb-2">Conjuntos STUDENT</h3>
-              <p className="text-zinc-600 mb-4">Mesas y sillas separadas segmentadas por Nivel (Inicial a 3er Ciclo). Disponibles en tapas de MDF, Polipropileno y ABS.</p>
-              <div className="flex items-center gap-2 mt-2">
-                <span className="w-4 h-4 rounded-full bg-blue-600"></span>
-                <span className="w-4 h-4 rounded-full bg-red-600"></span>
-                <span className="w-4 h-4 rounded-full bg-yellow-400"></span>
-                <span className="w-4 h-4 rounded-full bg-green-600"></span>
-                <span className="text-xs text-zinc-500 font-bold ml-2">Múltiples colores</span>
-              </div>
-            </div>
-
-            <Link href="/MoviAula" className="text-blue-600 font-bold hover:underline flex items-center gap-2 mt-4">
-              🧮 Ir a la Calculadora Avanzada MoviAula →
+          {/* Menú para Computadoras (Desktop) */}
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`text-sm lg:text-base font-bold transition-colors ${
+                  pathname === link.href ? "text-blue-600" : "text-zinc-600 hover:text-blue-600"
+                } ${link.special ? "text-red-600 hover:text-red-700" : ""}`}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Link
+              href="/MoviAula"
+              className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold px-5 py-2 rounded-full transition-transform hover:scale-105 flex items-center gap-2 shadow-sm text-sm lg:text-base"
+            >
+              <span>🧮</span> Cotizador
             </Link>
           </div>
 
-          {/* COLUMNA DERECHA: El Panel del Asesor IA (Esqueleto) */}
-          <div className="bg-zinc-900 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden flex flex-col h-[500px]">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-yellow-400 to-red-500"></div>
-            
-            <div className="flex items-center gap-4 mb-6 border-b border-zinc-800 pb-6">
-              <div className="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center text-2xl shadow-inner">
-                🤖
-              </div>
-              <div>
-                <h3 className="font-bold text-white text-lg">Asesor Comercial B2B</h3>
-                <p className="text-xs text-green-400 flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                  En línea y listo para cotizar
-                </p>
-              </div>
-            </div>
-
-            {/* Ventana de Chat (Aquí inyectaremos la IA de Vercel después) */}
-            <div className="flex-1 bg-zinc-950 rounded-xl p-4 overflow-y-auto mb-4 border border-zinc-800 flex flex-col gap-4">
-              <div className="bg-zinc-800 text-zinc-200 p-4 rounded-2xl rounded-tl-sm w-5/6 text-sm">
-                ¡Hola! Soy el asistente virtual de Metal Mad. Puedo redactar un presupuesto formal en PDF en segundos.
-              </div>
-              <div className="bg-zinc-800 text-zinc-200 p-4 rounded-2xl rounded-tl-sm w-5/6 text-sm">
-                Para empezar, ¿Me podrías decir <strong>el nombre de la institución o RUC</strong>, en qué <strong>ciudad</strong> se encuentran y <strong>qué modelos</strong> desean cotizar?
-              </div>
-            </div>
-
-            {/* Input de usuario (Visual por ahora) */}
-            <div className="flex gap-2">
-              <input 
-                type="text" 
-                placeholder="Ej: Colegio San José, Asunción, 50 pupitres Iso..." 
-                disabled
-                className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none opacity-50 cursor-not-allowed"
-              />
-              <button disabled className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold opacity-50 cursor-not-allowed">
-                Enviar
-              </button>
-            </div>
-            <p className="text-center text-zinc-600 text-xs mt-3 font-mono">Motor IA en construcción 🚧</p>
-
+          {/* Botón "Hamburguesa" para Celulares (Mobile) */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-zinc-600 hover:text-blue-600 focus:outline-none p-2"
+              aria-label="Abrir menú"
+            >
+              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {isOpen ? (
+                  // Ícono de "X" cuando está abierto
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  // Ícono de "Hamburguesa" cuando está cerrado
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
-
         </div>
       </div>
-    </div>
+
+      {/* Menú Desplegable para Celulares */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-t border-zinc-100 shadow-2xl absolute w-full">
+          <div className="px-4 pt-4 pb-8 space-y-2 flex flex-col">
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)} // Cierra el menú al hacer clic
+                className={`block px-4 py-3 rounded-xl text-lg font-bold ${
+                  pathname === link.href ? "bg-blue-50 text-blue-600" : "text-zinc-600 hover:bg-zinc-50"
+                } ${link.special ? "text-red-600" : ""}`}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <div className="pt-4 pb-2 px-2">
+              <Link
+                href="/MoviAula"
+                onClick={() => setIsOpen(false)}
+                className="flex justify-center w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold px-6 py-4 rounded-xl shadow-md text-center text-lg"
+              >
+                🧮 Ir al Cotizador
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }
