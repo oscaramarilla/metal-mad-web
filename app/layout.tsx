@@ -3,6 +3,7 @@ import "./globals.css"; // ¡ESTA LÍNEA ES VITAL PARA LOS ESTILOS!
 import Navbar from "./components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next"; // <-- Medidor de velocidad de Vercel
 import { GoogleAnalytics } from '@next/third-parties/google'; // <-- 1. IMPORTAMOS ANALYTICS
+import { Analytics } from "@vercel/analytics/react"; // <-- IMPORTAMOS VERCEL WEB ANALYTICS
 
 // 🧠 AQUÍ ESTÁ LA LLAVE DE GOOGLE SEARCH CONSOLE
 export const metadata: Metadata = {
@@ -37,6 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Analíticas de rendimiento de Vercel activadas */}
         <SpeedInsights />
+
+        {/* Analíticas de Tráfico de Vercel */}
+        <Analytics />
 
         {/* 2. AQUÍ INYECTAMOS TU CÓDIGO DE GOOGLE ANALYTICS */}
         <GoogleAnalytics gaId="G-Z60DLHYCHP" />
