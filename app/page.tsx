@@ -1,11 +1,27 @@
 import { Metadata } from "next";
 import Image from "next/image";
 
-// 🧠 1. EL CEREBRO SEO: Solo un export const metadata en todo el archivo.
+// 🧠 1. EL CEREBRO SEO OPTIMIZADO: Descripción corta y Open Graph para WhatsApp/Redes
 export const metadata: Metadata = {
   title: "Fábrica de Mobiliario Escolar en Paraguay | Metal Mad",
-  description: "Fabricantes directos de pupitres escolares, mesas y sillas para alumnos en Paraguay. Capacidad industrial exclusiva para colegios y licitaciones. Representantes de Oriplast.",
+  description: "Fábrica de pupitres escolares y mesas en Paraguay. Capacidad industrial para colegios y licitaciones. Representantes Oriplast.",
   keywords: ["mobiliario escolar paraguay", "pupitre escolar", "mesas y sillas para alumnos", "muebles para colegio", "fábrica mobiliario B2B"],
+  openGraph: {
+    title: "Fábrica de Mobiliario Escolar en Paraguay | Metal Mad",
+    description: "Equipamiento industrial para colegios e instituciones en Paraguay.",
+    url: "https://metalmadeas.com",
+    siteName: "Metal Mad",
+    images: [
+      {
+        url: "https://metalmadeas.com/productos/pupitre.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Pupitre escolar y silla para alumno fabricado por Metal Mad en Asunción",
+      },
+    ],
+    locale: "es_PY",
+    type: "website",
+  },
 };
 
 export default function Home() {
@@ -76,7 +92,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECCIÓN SEO CORPORATIVA (Inyectada directamente aquí) */}
+      {/* SECCIÓN SEO CORPORATIVA (Recuperada para no perder puntaje de palabras clave) */}
       <section className="max-w-6xl mx-auto px-6 mt-12 mb-16 w-full">
         <div className="bg-zinc-900 rounded-[2.5rem] p-10 md:p-16 text-zinc-300 shadow-2xl">
           <h2 className="text-3xl font-black text-white mb-6">Líderes en Fabricación de Pupitres Escolares en Paraguay</h2>
