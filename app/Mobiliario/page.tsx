@@ -1,57 +1,102 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pupitres Escolares y Mesas para Aula en Paraguay | Metal Mad",
-  description: "Fabricamos mobiliario escolar ultrarresistente. Pupitres, sillas y mesas con estructura metálica y plástico inyectado Oriplast. Cotiza online.",
+  title: "Mobiliario Escolar y Cotizador B2B | Metal Mad",
+  description: "Explora nuestras líneas de mobiliario escolar y genera tu presupuesto en PDF al instante con nuestro asesor virtual.",
 };
+
 export default function MobiliarioPage() {
   return (
-    <div className="p-10 bg-white min-h-screen text-black py-16">
-      <h1 className="text-4xl font-black text-blue-600 mb-4">Mobiliario Educativo</h1>
-      <p className="text-xl text-zinc-600 mb-10 max-w-2xl">
-        Fabricación de sillas y mesas ergonómicas y duraderas. Transformamos los espacios de estudio en todo Paraguay con estructuras metálicas de alta resistencia.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="p-6 border border-zinc-200 rounded-xl shadow-sm hover:shadow-md transition">
-          <h3 className="text-xl font-bold text-zinc-800 mb-2">Pupitre Unipersonal</h3>
-          <p className="text-zinc-600">Estructura metálica reforzada con asiento y respaldo en polipropileno. Ideal para colegios.</p>
-        </div>
+    <div className="min-h-screen bg-zinc-50 font-sans pb-20 pt-16">
+      <div className="max-w-6xl mx-auto px-6">
         
-        <div className="p-6 border border-zinc-200 rounded-xl shadow-sm hover:shadow-md transition">
-          <h3 className="text-xl font-bold text-zinc-800 mb-2">Mesa Universitaria</h3>
-          <p className="text-zinc-600">Superficie amplia y resistente, diseñada para el máximo rendimiento del alumno.</p>
-        </div>
+        <header className="text-center mb-16">
+          <span className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4 block">
+            Catálogo y Presupuestos
+          </span>
+          <h1 className="text-4xl md:text-5xl font-black text-zinc-900 mb-6">
+            Líneas de Mobiliario Escolar
+          </h1>
+          <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+            Navega por nuestras líneas inyectadas y pide a nuestro asesor inteligente que te redacte un presupuesto formal en formato PDF al instante.
+          </p>
+        </header>
 
-        <div className="p-6 border border-zinc-200 rounded-xl shadow-sm hover:shadow-md transition">
-          <h3 className="text-xl font-bold text-zinc-800 mb-2">Sillas Apilables</h3>
-          <p className="text-zinc-600">Optimizan el espacio de las aulas. Ligeras pero extremadamente duraderas.</p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          
+          {/* COLUMNA IZQUIERDA: Resumen del Catálogo */}
+          <div className="flex flex-col gap-6">
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-200">
+              <span className="bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Más Vendido</span>
+              <h3 className="text-2xl font-bold text-blue-900 mb-2">Línea Iso ORIPLAST</h3>
+              <p className="text-zinc-600 mb-4">Pupitre ergonómico inyectado. Máxima resistencia para alto tránsito con estructura metálica tratada.</p>
+              <div className="text-xl font-black text-zinc-900">Gs. 285.000 <span className="text-sm text-zinc-500 font-normal">/ unid.</span></div>
+            </div>
+
+            <div className="bg-white p-8 rounded-3xl shadow-sm border border-zinc-200 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">PREMIUM</div>
+              <h3 className="text-2xl font-bold text-blue-900 mb-2">Conjuntos STUDENT</h3>
+              <p className="text-zinc-600 mb-4">Mesas y sillas separadas segmentadas por Nivel (Inicial a 3er Ciclo). Disponibles en tapas de MDF, Polipropileno y ABS.</p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="w-4 h-4 rounded-full bg-blue-600"></span>
+                <span className="w-4 h-4 rounded-full bg-red-600"></span>
+                <span className="w-4 h-4 rounded-full bg-yellow-400"></span>
+                <span className="w-4 h-4 rounded-full bg-green-600"></span>
+                <span className="text-xs text-zinc-500 font-bold ml-2">Múltiples colores</span>
+              </div>
+            </div>
+
+            <Link href="/MoviAula" className="text-blue-600 font-bold hover:underline flex items-center gap-2 mt-4">
+              🧮 Ir a la Calculadora Avanzada MoviAula →
+            </Link>
+          </div>
+
+          {/* COLUMNA DERECHA: El Panel del Asesor IA (Esqueleto) */}
+          <div className="bg-zinc-900 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden flex flex-col h-[500px]">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-yellow-400 to-red-500"></div>
+            
+            <div className="flex items-center gap-4 mb-6 border-b border-zinc-800 pb-6">
+              <div className="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center text-2xl shadow-inner">
+                🤖
+              </div>
+              <div>
+                <h3 className="font-bold text-white text-lg">Asesor Comercial B2B</h3>
+                <p className="text-xs text-green-400 flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                  En línea y listo para cotizar
+                </p>
+              </div>
+            </div>
+
+            {/* Ventana de Chat (Aquí inyectaremos la IA de Vercel después) */}
+            <div className="flex-1 bg-zinc-950 rounded-xl p-4 overflow-y-auto mb-4 border border-zinc-800 flex flex-col gap-4">
+              <div className="bg-zinc-800 text-zinc-200 p-4 rounded-2xl rounded-tl-sm w-5/6 text-sm">
+                ¡Hola! Soy el asistente virtual de Metal Mad. Puedo redactar un presupuesto formal en PDF en segundos.
+              </div>
+              <div className="bg-zinc-800 text-zinc-200 p-4 rounded-2xl rounded-tl-sm w-5/6 text-sm">
+                Para empezar, ¿Me podrías decir <strong>el nombre de la institución o RUC</strong>, en qué <strong>ciudad</strong> se encuentran y <strong>qué modelos</strong> desean cotizar?
+              </div>
+            </div>
+
+            {/* Input de usuario (Visual por ahora) */}
+            <div className="flex gap-2">
+              <input 
+                type="text" 
+                placeholder="Ej: Colegio San José, Asunción, 50 pupitres Iso..." 
+                disabled
+                className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none opacity-50 cursor-not-allowed"
+              />
+              <button disabled className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold opacity-50 cursor-not-allowed">
+                Enviar
+              </button>
+            </div>
+            <p className="text-center text-zinc-600 text-xs mt-3 font-mono">Motor IA en construcción 🚧</p>
+
+          </div>
+
         </div>
       </div>
-      {/* SECCIÓN SEO: El motor de búsqueda leerá esto para posicionarte */}
-      <section className="mt-20 bg-white p-10 md:p-16 rounded-3xl border border-zinc-200 shadow-sm">
-        <h2 className="text-3xl font-black text-blue-900 mb-6">Mobiliario Escolar en Paraguay: Calidad que transforma el aula</h2>
-        <div className="prose prose-zinc max-w-none text-zinc-600 space-y-4">
-          <p>
-            Al momento de equipar instituciones educativas, la elección del <strong>mobiliario escolar en Paraguay</strong> define no solo la comodidad del alumno, sino la rentabilidad de la inversión a largo plazo. En Metal Mad E.A.S., somos especialistas como fabricantes y <strong>proveedor de mobiliario escolar</strong>, enfocados en erradicar los problemas comunes de la madera tradicional.
-          </p>
-          <p>
-            Nuestros <strong>pupitres escolares, mesas y sillas para alumnos</strong> están diseñados bajo estrictas normas de ergonomía. Utilizamos estructuras metálicas reforzadas, soldadas con precisión milimétrica, que garantizan la máxima estabilidad en el día a día del entorno académico. 
-          </p>
-          <h3 className="text-2xl font-bold text-zinc-800 mt-8 mb-4">¿Por qué elegir nuestros muebles para aulas?</h3>
-          <ul className="list-disc pl-6 space-y-2 mb-6">
-            <li><strong>Durabilidad Extrema:</strong> Al ser los representantes exclusivos de la marca brasileña <strong>ORIPLAST</strong> en el país, ensamblamos nuestras estructuras con asientos, respaldos y tampos (tapas) de polipropileno inyectado de alta ingeniería.</li>
-            <li><strong>Seguridad para el Alumno:</strong> Cero astillas, cero bordes filosos. El plástico inyectado protege la integridad física y los uniformes de los estudiantes.</li>
-            <li><strong>Higiene y Mantenimiento:</strong> Superficies no porosas que permiten una limpieza rápida, ideal para mantener protocolos de salud en los colegios.</li>
-            <li><strong>Cumplimiento para Licitaciones:</strong> Nuestro suministro cumple con todas las normativas legales (Ley 7021/2022 y Ley 1294/1998) de Contrataciones Públicas (DNCP), asegurando que tu compra institucional tenga un respaldo jurídico absoluto.</li>
-          </ul>
-          <p>
-            Ya sea que busques renovar un colegio privado, equipar una universidad o participar en licitaciones del Estado, nuestro catálogo de <strong>pupitres escolares en Paraguay</strong> ofrece la mejor relación costo-beneficio del mercado. Transforma tus aulas hoy mismo y dile adiós al gasto constante en reparaciones.
-          </p>
-        </div>
-      </section>
     </div>
   );
 }
-
-
