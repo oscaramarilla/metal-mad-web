@@ -6,8 +6,6 @@ export const metadata: Metadata = {
   description: "Noticias oficiales, guías de licitación y recursos sobre mobiliario escolar de alta ingeniería en Paraguay y Bolivia.",
 };
 
-// 🧠 AQUÍ ESTÁ LA MAGIA: Tu Mini Base de Datos SEO
-// Cuando crees un nuevo artículo, solo agregas un bloque aquí y aparecerá automáticamente.
 const blogPosts = [
   {
     slug: "santa-cruz-bolivia",
@@ -16,7 +14,7 @@ const blogPosts = [
     bgColor: "bg-zinc-800",
     title: "Equipando el futuro de Santa Cruz, Bolivia",
     description: "Conoce por qué importar mobiliario inyectado desde Paraguay es la estrategia más rentable para las nuevas instituciones cruceñas.",
-    size: "normal" // Ocupa 1 columna
+    size: "normal" 
   },
   {
     slug: "comunicado-oriplast",
@@ -25,7 +23,7 @@ const blogPosts = [
     bgColor: "bg-zinc-900",
     title: "Representación Exclusiva de ORIPLAST en Paraguay",
     description: "Anuncio oficial sobre la distribución de componentes plásticos y las normativas legales (Ley 7021/2022) para licitaciones en el país.",
-    size: "normal" // Ocupa 1 columna
+    size: "normal" 
   },
   {
     slug: "adios-madera",
@@ -34,7 +32,7 @@ const blogPosts = [
     bgColor: "bg-blue-900",
     title: "Adiós a la madera: El futuro del aula es inyectado",
     description: "Descubre por qué las instituciones líderes están reemplazando los pupitres tradicionales por polipropileno de alta ingeniería.",
-    size: "normal" // Ocupa 1 columna
+    size: "normal" 
   },
   {
     slug: "guia-licitadores",
@@ -43,7 +41,7 @@ const blogPosts = [
     bgColor: "bg-[#111111]",
     title: "Guía para Licitadores: Evita el rechazo de tu oferta",
     description: "Conoce por qué las normativas de propiedad intelectual de la nueva Ley de Contrataciones son el principal filtro para proveedores del Estado y cómo asegurar tu adjudicación.",
-    size: "grande" // Ocupa 2 columnas
+    size: "grande" 
   },
   {
     slug: "inversion-vs-gasto",
@@ -52,7 +50,7 @@ const blogPosts = [
     bgColor: "bg-green-900",
     title: "Inversión vs. Gasto: La verdadera vida útil del mobiliario",
     description: "Aprende a calcular el Retorno de Inversión (ROI) al equipar tu colegio. Descubre matemáticamente por qué comprar muebles baratos de madera termina siendo un agujero financiero.",
-    size: "grande" // Ocupa 2 columnas
+    size: "grande" 
   }
 ];
 
@@ -69,7 +67,6 @@ export default function BlogIndex() {
           </p>
         </header>
 
-        {/* El código "lee" tu base de datos de arriba y dibuja las tarjetas automáticamente */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {blogPosts.map((post) => (
             <Link 
@@ -97,3 +94,4 @@ export default function BlogIndex() {
     </div>
   );
 }
+

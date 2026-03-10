@@ -1,99 +1,58 @@
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Centro de Innovación Educativa | Metal Mad",
-  description: "Noticias oficiales, guías de licitación y recursos sobre mobiliario escolar de alta ingeniería en Paraguay y Bolivia.",
+  title: "Mobiliario Escolar para Santa Cruz, Bolivia | Exportación Metal Mad",
+  description: "Guía para directores e inversionistas educativos en Santa Cruz de la Sierra. Descubre cómo importar pupitres inyectados y mesas escolares desde Paraguay.",
 };
 
-// 🧠 AQUÍ ESTÁ LA MAGIA: Tu Mini Base de Datos SEO
-// Cuando crees un nuevo artículo, solo agregas un bloque aquí y aparecerá automáticamente.
-const blogPosts = [
-  {
-    slug: "santa-cruz-bolivia",
-    tag: "Exportación B2B",
-    tagColor: "bg-green-600 text-white",
-    bgColor: "bg-zinc-800",
-    title: "Equipando el futuro de Santa Cruz, Bolivia",
-    description: "Conoce por qué importar mobiliario inyectado desde Paraguay es la estrategia más rentable para las nuevas instituciones cruceñas.",
-    size: "normal" // Ocupa 1 columna
-  },
-  {
-    slug: "comunicado-oriplast",
-    tag: "Comunicado Oficial",
-    tagColor: "bg-red-600 text-white",
-    bgColor: "bg-zinc-900",
-    title: "Representación Exclusiva de ORIPLAST en Paraguay",
-    description: "Anuncio oficial sobre la distribución de componentes plásticos y las normativas legales (Ley 7021/2022) para licitaciones en el país.",
-    size: "normal" // Ocupa 1 columna
-  },
-  {
-    slug: "adios-madera",
-    tag: "Tecnología de Aula",
-    tagColor: "bg-yellow-400 text-blue-900",
-    bgColor: "bg-blue-900",
-    title: "Adiós a la madera: El futuro del aula es inyectado",
-    description: "Descubre por qué las instituciones líderes están reemplazando los pupitres tradicionales por polipropileno de alta ingeniería.",
-    size: "normal" // Ocupa 1 columna
-  },
-  {
-    slug: "guia-licitadores",
-    tag: "DNCP y Licitaciones",
-    tagColor: "bg-yellow-400 text-zinc-900",
-    bgColor: "bg-[#111111]",
-    title: "Guía para Licitadores: Evita el rechazo de tu oferta",
-    description: "Conoce por qué las normativas de propiedad intelectual de la nueva Ley de Contrataciones son el principal filtro para proveedores del Estado y cómo asegurar tu adjudicación.",
-    size: "grande" // Ocupa 2 columnas
-  },
-  {
-    slug: "inversion-vs-gasto",
-    tag: "Finanzas Educativas",
-    tagColor: "bg-white text-green-900",
-    bgColor: "bg-green-900",
-    title: "Inversión vs. Gasto: La verdadera vida útil del mobiliario",
-    description: "Aprende a calcular el Retorno de Inversión (ROI) al equipar tu colegio. Descubre matemáticamente por qué comprar muebles baratos de madera termina siendo un agujero financiero.",
-    size: "grande" // Ocupa 2 columnas
-  }
-];
-
-export default function BlogIndex() {
+export default function SantaCruzBlog() {
   return (
-    <div className="min-h-screen bg-zinc-50 font-sans pb-20 pt-16">
-      <div className="max-w-5xl mx-auto px-6">
+    <article className="min-h-screen bg-zinc-50 font-sans pb-20 pt-10">
+      <div className="max-w-3xl mx-auto px-6">
         
-        <header className="text-center mb-16">
-          <span className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-4 block">Centro de Recursos</span>
-          <h1 className="text-4xl md:text-5xl font-black text-zinc-900 mb-6">Noticias e Innovación Educativa</h1>
-          <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
-            El espacio definitivo para directores de colegios y fabricantes de Paraguay. Descubre normativas, tendencias y tecnología de materiales.
+        <header className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Expansión Internacional</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-black text-zinc-900 leading-tight mb-6">
+            Equipando el futuro de Santa Cruz: Mobiliario escolar de alta ingeniería
+          </h1>
+          <p className="text-xl text-zinc-600 leading-relaxed">
+            El auge educativo en Santa Cruz de la Sierra exige infraestructura de primer nivel. Conoce por qué importar mobiliario desde Paraguay es la estrategia más rentable para tu institución.
           </p>
         </header>
 
-        {/* El código "lee" tu base de datos de arriba y dibuja las tarjetas automáticamente */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPosts.map((post) => (
-            <Link 
-              key={post.slug}
-              href={`/blog/${post.slug}`} 
-              className={`group bg-white rounded-3xl overflow-hidden shadow-sm border border-zinc-200 hover:shadow-xl transition-all duration-300 flex flex-col ${post.size === 'grande' ? 'md:col-span-2' : ''}`}
-            >
-              <div className={`h-48 ${post.bgColor} relative p-6 flex items-end`}>
-                <div className={`absolute top-4 left-4 text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${post.tagColor}`}>
-                  {post.tag}
-                </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">{post.title}</h3>
-              </div>
-              <div className="p-8 flex-1 flex flex-col justify-between">
-                <p className="text-zinc-600 mb-6">{post.description}</p>
-                <span className="text-blue-600 font-bold group-hover:translate-x-2 transition-transform inline-flex items-center gap-2">
-                  Leer artículo completo →
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <div className="prose prose-lg prose-zinc max-w-none">
+          <p>
+            Santa Cruz de la Sierra es el motor económico de Bolivia y su crecimiento demográfico ha impulsado la construcción de nuevos y modernos centros educativos. Sin embargo, al momento de equipar las aulas, los administradores enfrentan un mercado local saturado de opciones de madera tradicional que no soportan el clima tropical ni el uso intensivo.
+          </p>
 
+          <h3 className="text-2xl font-bold text-zinc-900 mt-8 mb-4">La ventaja logística Paraguay - Bolivia</h3>
+          <p>
+            En <strong>Metal Mad E.A.S.</strong>, hemos optimizado nuestra línea de producción industrial en Asunción para abastecer la creciente demanda del mercado cruceño. Importar pupitres, mesas y sillas desde Paraguay ofrece ventajas estratégicas inigualables:
+          </p>
+          <ul className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm my-6">
+            <li><strong>Beneficios del MERCOSUR:</strong> Aranceles preferenciales que hacen que la importación directa de fábrica sea más económica que comprar a revendedores locales.</li>
+            <li><strong>Proximidad Terrestre:</strong> Tiempos de tránsito terrestre cortos y seguros a través del Chaco, garantizando entregas rápidas para inicios de ciclo lectivo.</li>
+            <li><strong>Tecnología Inyectada:</strong> Llevamos a Bolivia la resistencia del polipropileno inyectado de <strong>ORIPLAST</strong>, el cual no se astilla, no se hincha con la humedad y tiene una vida útil superior a los 10 años.</li>
+          </ul>
+
+          <div className="mt-12 bg-zinc-900 text-white p-8 rounded-3xl text-center shadow-2xl">
+            <h3 className="text-2xl font-black mb-4">¿Listo para equipar tu institución en Bolivia?</h3>
+            <p className="text-zinc-400 mb-6 text-sm">
+              Contacta directamente con nuestra dirección comercial para obtener tarifas de exportación FOB/CIF y descubre cómo optimizar tu presupuesto institucional.
+            </p>
+            <a 
+              href="https://wa.me/595982451828?text=Hola,%20les%20escribo%20desde%20Santa%20Cruz,%20Bolivia.%20Deseo%20información%20sobre%20importación%20de%20mobiliario." 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-yellow-400 hover:bg-yellow-500 text-zinc-900 font-black px-8 py-4 rounded-xl transition-all shadow-lg hover:scale-105"
+            >
+              SOLICITAR ASESORÍA DE EXPORTACIÓN
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
+    </article>
   );
 }
