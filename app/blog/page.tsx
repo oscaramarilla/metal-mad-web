@@ -3,12 +3,21 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Centro de Innovación Educativa | Metal Mad",
-  description: "Noticias oficiales, guías de licitación y recursos sobre mobiliario escolar de alta ingeniería en Paraguay.",
+  description: "Noticias oficiales, guías de licitación y recursos sobre mobiliario escolar de alta ingeniería en Paraguay y Bolivia.",
 };
 
 // 🧠 AQUÍ ESTÁ LA MAGIA: Tu Mini Base de Datos SEO
 // Cuando crees un nuevo artículo, solo agregas un bloque aquí y aparecerá automáticamente.
 const blogPosts = [
+  {
+    slug: "santa-cruz-bolivia",
+    tag: "Exportación B2B",
+    tagColor: "bg-green-600 text-white",
+    bgColor: "bg-zinc-800",
+    title: "Equipando el futuro de Santa Cruz, Bolivia",
+    description: "Conoce por qué importar mobiliario inyectado desde Paraguay es la estrategia más rentable para las nuevas instituciones cruceñas.",
+    size: "normal" // Ocupa 1 columna
+  },
   {
     slug: "comunicado-oriplast",
     tag: "Comunicado Oficial",
