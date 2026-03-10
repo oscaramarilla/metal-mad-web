@@ -8,6 +8,17 @@ export const metadata: Metadata = {
 
 const blogPosts = [
   {
+    href: "/impacto-social", // <-- Enlace inteligente directo a tu página solidaria
+    slug: "impacto-social",
+    tag: "Responsabilidad Social",
+    tagColor: "bg-red-600 text-white",
+    bgColor: "bg-zinc-900",
+    title: "Equipando sueños juntos: 40% de Subsidio",
+    description: "Programa de apoyo educativo para ONGs, donaciones y fundaciones. Descubre cómo activar este beneficio directo de fábrica.",
+    size: "grande" // Ocupa 2 columnas para que destaque al principio
+  },
+  {
+    href: "/blog/santa-cruz-bolivia",
     slug: "santa-cruz-bolivia",
     tag: "Exportación B2B",
     tagColor: "bg-green-600 text-white",
@@ -17,15 +28,17 @@ const blogPosts = [
     size: "normal" 
   },
   {
+    href: "/blog/comunicado-oriplast",
     slug: "comunicado-oriplast",
     tag: "Comunicado Oficial",
-    tagColor: "bg-red-600 text-white",
-    bgColor: "bg-zinc-900",
+    tagColor: "bg-blue-600 text-white",
+    bgColor: "bg-[#111111]",
     title: "Representación Exclusiva de ORIPLAST en Paraguay",
     description: "Anuncio oficial sobre la distribución de componentes plásticos y las normativas legales (Ley 7021/2022) para licitaciones en el país.",
     size: "normal" 
   },
   {
+    href: "/blog/adios-madera",
     slug: "adios-madera",
     tag: "Tecnología de Aula",
     tagColor: "bg-yellow-400 text-blue-900",
@@ -35,15 +48,17 @@ const blogPosts = [
     size: "normal" 
   },
   {
+    href: "/blog/guia-licitadores",
     slug: "guia-licitadores",
     tag: "DNCP y Licitaciones",
     tagColor: "bg-yellow-400 text-zinc-900",
-    bgColor: "bg-[#111111]",
+    bgColor: "bg-zinc-800",
     title: "Guía para Licitadores: Evita el rechazo de tu oferta",
     description: "Conoce por qué las normativas de propiedad intelectual de la nueva Ley de Contrataciones son el principal filtro para proveedores del Estado y cómo asegurar tu adjudicación.",
-    size: "grande" 
+    size: "normal" 
   },
   {
+    href: "/blog/inversion-vs-gasto",
     slug: "inversion-vs-gasto",
     tag: "Finanzas Educativas",
     tagColor: "bg-white text-green-900",
@@ -71,7 +86,7 @@ export default function BlogIndex() {
           {blogPosts.map((post) => (
             <Link 
               key={post.slug}
-              href={`/blog/${post.slug}`} 
+              href={post.href} 
               className={`group bg-white rounded-3xl overflow-hidden shadow-sm border border-zinc-200 hover:shadow-xl transition-all duration-300 flex flex-col ${post.size === 'grande' ? 'md:col-span-2' : ''}`}
             >
               <div className={`h-48 ${post.bgColor} relative p-6 flex items-end`}>
@@ -94,4 +109,3 @@ export default function BlogIndex() {
     </div>
   );
 }
-
