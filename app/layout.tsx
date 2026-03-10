@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css"; // ¡ESTA LÍNEA ES VITAL PARA LOS ESTILOS!
 import Navbar from "./components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next"; // <-- Medidor de velocidad de Vercel
+import { GoogleAnalytics } from '@next/third-parties/google'; // <-- 1. IMPORTAMOS ANALYTICS
 
 // 🧠 AQUÍ ESTÁ LA LLAVE DE GOOGLE SEARCH CONSOLE
 export const metadata: Metadata = {
@@ -36,6 +37,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Analíticas de rendimiento de Vercel activadas */}
         <SpeedInsights />
+
+        {/* 2. AQUÍ INYECTAMOS TU CÓDIGO DE GOOGLE ANALYTICS */}
+        <GoogleAnalytics gaId="G-Z60DLHYCHP" />
 
         {/* Botón flotante de WhatsApp mejorado */}
         <a 
