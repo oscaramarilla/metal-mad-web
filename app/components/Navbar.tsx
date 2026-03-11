@@ -8,13 +8,15 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // 🧠 Base de datos de tus enlaces. Si quieres agregar uno nuevo, solo ponlo aquí y aparecerá en PC y Celular.
+  // 🧠 Base de datos de tus enlaces. ¡Catálogo y Nosotros han vuelto!
   const links = [
     { name: "Inicio", href: "/" },
     { name: "Mobiliario", href: "/Mobiliario" },
+    { name: "Catálogo", href: "/catalogo" }, // <-- Recuperado
     { name: "MoviAula", href: "/MoviAula" },
-    { name: "Cotizador Rápido", href: "/cotizador" }, // <-- ¡AQUÍ ESTÁ EL NUEVO EMBUDO!
+    { name: "Cotizador Rápido", href: "/cotizador" },
     { name: "Blog", href: "/blog" },
+    { name: "Nosotros", href: "/Nosotros" }, // <-- Recuperado
     { name: "Impacto Social", href: "/impacto-social", special: true },
   ];
 
@@ -34,7 +36,7 @@ export default function Navbar() {
           </div>
 
           {/* Menú para Computadoras (Desktop) */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          <div className="hidden md:flex items-center space-x-5 lg:space-x-7">
             {links.map((link) => (
               <Link
                 key={link.name}
@@ -63,10 +65,8 @@ export default function Navbar() {
             >
               <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isOpen ? (
-                  // Ícono de "X" cuando está abierto
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  // Ícono de "Hamburguesa" cuando está cerrado
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
@@ -75,9 +75,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Menú Desplegable para Celulares */}
+      {/* Menú Desplegable para Celulares (Con Scroll automático si es muy largo) */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-zinc-100 shadow-2xl absolute w-full">
+        <div className="md:hidden bg-white border-t border-zinc-100 shadow-2xl absolute w-full max-h-[85vh] overflow-y-auto">
           <div className="px-4 pt-4 pb-8 space-y-2 flex flex-col">
             {links.map((link) => (
               <Link
@@ -106,3 +106,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
