@@ -13,6 +13,7 @@ export default function Navbar() {
     { name: "Inicio", href: "/" },
     { name: "Mobiliario", href: "/Mobiliario" },
     { name: "MoviAula", href: "/MoviAula" },
+    { name: "Cotizador Rápido", href: "/cotizador" }, // <-- ¡AQUÍ ESTÁ EL NUEVO EMBUDO!
     { name: "Blog", href: "/blog" },
     { name: "Impacto Social", href: "/impacto-social", special: true },
   ];
