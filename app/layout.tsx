@@ -20,7 +20,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {/* Aplicamos el fondo gris plata metálico (zinc-200) y blindamos contra el modo oscuro */}
       <body className="bg-zinc-200 text-zinc-900 antialiased">
         <Navbar />
-        
+       <body className="bg-zinc-200 text-zinc-900 antialiased">
+        <Navbar />
+
+        {/* 🧠 SEO TÉCNICO AVANZADO: Datos Estructurados para Google */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "Metal Mad E.A.S.",
+              "image": "https://metalmadeas.com/icon.webp",
+              "@id": "https://metalmadeas.com",
+              "url": "https://metalmadeas.com",
+              "telephone": "+595982451828",
+              "priceRange": "$$",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Lambaré",
+                "addressLocality": "Asunción",
+                "addressRegion": "Central",
+                "addressCountry": "PY"
+              },
+              "description": "Fábrica de pupitres inyectados y mobiliario escolar en Paraguay. Especialistas en licitaciones y equipamiento B2B para colegios.",
+              "sameAs": [
+                "https://wa.me/595982451828"
+              ]
+            })
+          }}
+        />
+
+        {/* Agregamos padding superior para que el Navbar fijo no tape el contenido */}
+        <main className="max-w-7xl mx-auto px-6 py-12 min-h-screen">
+          </main> 
         {/* Agregamos padding superior para que el Navbar fijo no tape el contenido */}
         <main className="max-w-7xl mx-auto px-6 py-12 min-h-screen"> 
           {children} 
