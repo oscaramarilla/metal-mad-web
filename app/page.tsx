@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: "Metal Mad",
     images: [
       {
-        url: "https://metalmadeas.com/productos/pupitre.jpg",
+        url: "https://metalmadeas.com/productos/pupitre.webp",
         width: 1200,
         height: 630,
         alt: "Pupitre escolar y silla para alumno fabricado por Metal Mad en Asunción",
@@ -65,7 +65,7 @@ export default function Home() {
         <div className="lg:w-1/2 flex justify-center w-full">
           <div className="relative w-full max-w-md aspect-[4/3]">
             <Image
-              src="/productos/pupitre.jpg"
+              src="/productos/pupitre.webp"
               alt="Pupitre escolar y silla para alumno fabricado por Metal Mad en Asunción"
               fill
               className="rounded-xl shadow-2xl object-cover"
