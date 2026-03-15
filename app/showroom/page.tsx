@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Showroom() {
   // ⚙️ TRUCO CTO: Cambia este número según la cantidad de fotos que subas a public/showroom/
-  const cantidadDeFotos = 12; 
+  const cantidadDeFotos = 19; 
   
   // Genera automáticamente las rutas: /showroom/1.webp, /showroom/2.webp...
   const fotos = Array.from({ length: cantidadDeFotos }, (_, i) => `/showroom/${i + 1}.webp`);
