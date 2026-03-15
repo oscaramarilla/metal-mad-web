@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,15 +26,23 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
           
-          {/* Logo */}
+         {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-3xl font-black text-blue-900 tracking-tighter">
-              MM<span className="text-blue-600">.</span>
+            <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
+              {/* Aquí le damos la orden de colgar el cuadro de tu depósito */}
+              <Image 
+                src="/icon.webp" 
+                alt="Logo Metal Mad" 
+                width={50} 
+                height={50} 
+                className="w-12 h-12 object-contain"
+                priority
+              />
+              <span className="text-xl font-black text-blue-900 tracking-tighter hidden sm:block">
+                METAL MAD
+              </span>
             </Link>
-            <span className="ml-2 text-xs font-bold text-zinc-400 tracking-widest uppercase hidden sm:block">
-              Metal Mad
-            </span>
-          </div>
+          </div> 
 
           {/* Menú para Computadoras (Desktop) */}
           <div className="hidden md:flex items-center space-x-5 lg:space-x-7">
