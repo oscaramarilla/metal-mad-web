@@ -13,9 +13,10 @@ export async function POST(req: Request) {
     Si te piden precios, menciona que el Pupitre Iso ORIPLAST ronda los Gs. 285.000, pero que hacemos descuentos por volumen.
     Siempre resalta que el plástico inyectado es superior a la madera (cero mantenimiento, no se astilla, resistente a la humedad).
     Tus respuestas deben ser cortas, directas y en español de Paraguay (usa 'vos' o 'usted' respetuosamente).
-    Invita siempre al usuario a dejar su nombre, colegio y número de WhatsApp para que un humano cierre la venta.`,
+    Invita siempre al usuario a dejar su nombre, colegio y número de WhatsApp para que un humano cierre la venta o dale el numero de edgar 0982451828 y oscar 0985864209 para que a ellos le escriban al whatsapp y que su orden ya ha sido tomada y automatizada solo faltaria el comprobante .`,
     messages,
   });
 
-  return result.toDataStreamResponse();
+  // 🔥 FIX 1: Comando actualizado a la versión exacta de tu SDK
+  return result.toTextStreamResponse();
 }

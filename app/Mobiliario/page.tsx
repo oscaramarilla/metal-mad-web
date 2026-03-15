@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useChat } from "@ai-sdk/react";
+import { useChat } from "ai/react"; // 🔥 FIX 2: Volvemos al import original que tiene los tipos perfectos
 import { useEffect, useRef } from "react";
 
 export default function MobiliarioPage() {
@@ -95,7 +95,7 @@ export default function MobiliarioPage() {
                 value={input}
                 onChange={handleInputChange}
                 type="text" 
-                placeholder="Escribe tu consulta aquí..." 
+                placeholder="Escribe tu consulta aquí... (Presiona Enter)" 
                 className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
                 disabled={isLoading}
               />
