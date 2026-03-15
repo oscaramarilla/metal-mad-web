@@ -2,18 +2,34 @@
 "use client";
 
 import Link from "next/link";
-import { useChat } from "@ai-sdk/react"; // 🔥 ESTA ES LA PALABRA MÁGICA PARA VERCEL
-import { useEffect, useRef } from "react";
+import { useChat } from "@ai-sdk/react";
+import { useEffect, useRef, useState } from "react"; // 🔥 Añadimos useState
 
 export default function MobiliarioPage() {
-  // Conectamos con nuestro backend mágico
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  // 1. Extraemos solo lo vital de la IA (mensajes, estado y el disparador manual "append")
+  const { messages, append, isLoading } = useChat();
+  
+  // 2. Control manual de la caja de texto (Blindaje anti-errores)
+  const [miTexto, setMiTexto] = useState("");
+  
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll para que el chat siempre muestre el último mensaje
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // 3. Función maestra que dispara el mensaje
+  const enviarMensaje = (e: any) => {
+    e.preventDefault(); // Evita recargar la página
+    if (!miTexto.trim() || isLoading) return; // Si está vacío, no hace nada
+
+    // Enviar a la IA
+    append({ role: "user", content: miTexto });
+    
+    // Limpiar la caja de texto
+    setMiTexto("");
+  };
 
   return (
     <div className="min-h-screen bg-zinc-50 font-sans pb-20 pt-16">
@@ -70,12 +86,10 @@ export default function MobiliarioPage() {
 
             {/* Ventana de Chat Dinámica */}
             <div className="flex-1 bg-zinc-950 rounded-xl p-4 overflow-y-auto mb-4 border border-zinc-800 flex flex-col gap-4">
-              {/* Mensaje de bienvenida estático */}
               <div className="bg-zinc-800 text-zinc-200 p-4 rounded-2xl rounded-tl-sm w-5/6 text-sm self-start">
                 ¡Hola! Soy la IA comercial de Metal Mad. ¿De qué institución nos escribes y qué tipo de mobiliario buscas hoy?
               </div>
               
-              {/* Mapeo de mensajes reales de la IA y el Usuario */}
               {messages?.map((m: any) => (
                 <div key={m.id} className={`p-4 rounded-2xl text-sm max-w-[85%] ${m.role === 'user' ? 'bg-blue-600 text-white self-end rounded-tr-sm' : 'bg-zinc-800 text-zinc-200 self-start rounded-tl-sm'}`}>
                   {m.content}
@@ -90,18 +104,27 @@ export default function MobiliarioPage() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input interactivo conectado al motor */}
-            <form onSubmit={handleSubmit} className="flex gap-2">
+            {/* Input BLINDADO y Responsivo */}
+            <form onSubmit={enviarMensaje} className="flex gap-2 mt-auto">
               <input 
-                value={input}
-                onChange={handleInputChange}
+                value={miTexto}
+                onChange={(e) => setMiTexto(e.target.value)}
                 type="text" 
-                placeholder="Escribe tu consulta aquí... (Presiona Enter)" 
-                className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
+                placeholder="Escribe tu consulta aquí..." 
+                className="flex-1 min-w-0 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500 transition-colors"
                 disabled={isLoading}
               />
-              <button type="submit" disabled={isLoading || !input} className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-bold transition-colors disabled:opacity-50">
-                Enviar
+              <button 
+                type="submit" 
+                disabled={isLoading || !miTexto.trim()} 
+                className="flex-shrink-0 bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-xl font-bold transition-colors disabled:opacity-50 flex items-center justify-center"
+                aria-label="Enviar mensaje"
+              >
+                {/* En PC muestra "Enviar", en Celular muestra un ícono de Avión */}
+                <span className="hidden sm:block">Enviar</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:hidden">
+                  <path d="M3.478 2.404a.75.75 0 00-.926.941l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.404z" />
+                </svg>
               </button>
             </form>
 
