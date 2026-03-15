@@ -125,7 +125,7 @@ export default function MoviAulaPage() {
                     <button onClick={() => setModelo("pro")} className={`p-4 rounded-xl border-2 text-left transition-all ${modelo === "pro" ? 'border-blue-600 bg-blue-50 relative overflow-hidden' : 'border-zinc-200 hover:border-blue-300 relative overflow-hidden'}`}>
                       {modelo === "pro" && <div className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">PREMIUM</div>}
                       <div className="font-black text-zinc-900">Student PRO</div>
-                      <div className="text-xs text-zinc-500 mt-1">Mesada de PP o ABS Alta Densidad con laminado melaminico superior. Máxima durabilidad y salubridad e Inocuidad Alinentaria.</div>
+                      <div className="text-xs text-zinc-500 mt-1">Mesada de PP o ABS Alta Densidad con laminado melaminico superior. Máxima durabilidad, salubridad, facil limpieza e Inocuidad Alimentaria.</div>
                     </button>
                   </div>
                 </div>
