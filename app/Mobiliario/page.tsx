@@ -3,32 +3,31 @@
 
 import Link from "next/link";
 import { useChat } from "@ai-sdk/react";
-import { useEffect, useRef, useState } from "react"; // 🔥 Añadimos useState
+import { useEffect, useRef, useState } from "react";
 
 export default function MobiliarioPage() {
-  // 1. Extraemos solo lo vital de la IA (mensajes, estado y el disparador manual "append")
-  const { messages, append, isLoading } = useChat();
-  
-  // 2. Control manual de la caja de texto (Blindaje anti-errores)
+  // 🔥 Añadimos "error" para que la web nos avise si algo falla en el servidor
+  const { messages, append, isLoading, error } = useChat();
   const [miTexto, setMiTexto] = useState("");
-  
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll para que el chat siempre muestre el último mensaje
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // 3. Función maestra que dispara el mensaje
   const enviarMensaje = (e: any) => {
-    e.preventDefault(); // Evita recargar la página
-    if (!miTexto.trim() || isLoading) return; // Si está vacío, no hace nada
+    e.preventDefault();
+    if (!miTexto.trim() || isLoading) return;
 
-    // Enviar a la IA
-    append({ role: "user", content: miTexto });
-    
-    // Limpiar la caja de texto
-    setMiTexto("");
+    const textoEnviado = miTexto;
+    setMiTexto(""); // Limpia la caja rápido
+
+    // 🔥 FIX: Le ponemos un ID obligatorio para que la IA lo registre sin fallar
+    append({
+      id: Date.now().toString(),
+      role: "user",
+      content: textoEnviado
+    });
   };
 
   return (
@@ -101,6 +100,14 @@ export default function MobiliarioPage() {
                   Escribiendo...
                 </div>
               )}
+
+              {/* 🔥 SISTEMA DE ALARMA VISUAL */}
+              {error && (
+                <div className="bg-red-900/50 border border-red-500 text-red-200 p-4 rounded-2xl w-full text-xs text-center font-mono">
+                  ⚠️ Error del Servidor: {error.message} <br/> (Revisa tu terminal o Vercel)
+                </div>
+              )}
+
               <div ref={messagesEndRef} />
             </div>
 
@@ -120,7 +127,6 @@ export default function MobiliarioPage() {
                 className="flex-shrink-0 bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-xl font-bold transition-colors disabled:opacity-50 flex items-center justify-center"
                 aria-label="Enviar mensaje"
               >
-                {/* En PC muestra "Enviar", en Celular muestra un ícono de Avión */}
                 <span className="hidden sm:block">Enviar</span>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:hidden">
                   <path d="M3.478 2.404a.75.75 0 00-.926.941l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.404z" />
