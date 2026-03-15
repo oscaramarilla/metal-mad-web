@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef } from "react";
 
 export default function MobiliarioPage() {
