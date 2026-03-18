@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next"; // <-- Medidor de velocidad de Vercel
 import { GoogleAnalytics } from '@next/third-parties/google'; // <-- 1. IMPORTAMOS ANALYTICS
 import { Analytics } from "@vercel/analytics/react"; // <-- IMPORTAMOS VERCEL WEB ANALYTICS
-import PagoSeguroFlotante from '@/components/PagoSeguroFlotante'; // <-- Tu nuevo componente
+import PagoSeguroFlotante from './components/PagoSeguroFlotante'; // <-- Tu nuevo componente
 
 // 🧠 AQUÍ ESTÁ LA LLAVE DE GOOGLE SEARCH CONSOLE
 export const metadata: Metadata = {
