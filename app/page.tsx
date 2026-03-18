@@ -3,7 +3,7 @@ import Image from "next/image";
 
 // 🧠 1. EL CEREBRO SEO OPTIMIZADO: Descripción corta y Open Graph para WhatsApp/Redes
 export const metadata: Metadata = {
-  title: "Fábrica de Mobiliario Escolar en Paraguay | Metal Mad",
+  title: "Infraestructura Educativa de Alto Rendimiento: Mobiliario Inyectado con Garantía de Fábrica en Paraguay",
   description: "Fábrica de pupitres escolares y mesas en Paraguay. Capacidad industrial para colegios y licitaciones. Representantes Oriplast.",
   keywords: ["mobiliario escolar paraguay", "pupitre escolar", "mesas y sillas para alumnos", "muebles para colegio", "fábrica mobiliario B2B"],
   openGraph: {
@@ -79,16 +79,16 @@ export default function Home() {
       {/* Sección Inferior de Beneficios */}
       <section className="w-full max-w-5xl py-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center border-t border-zinc-300 mt-10 px-6">
         <div>
-          <h2 className="text-xl font-bold text-blue-800 mb-2">Resistencia Estructural</h2>
-          <p className="text-zinc-700">Estructuras metálicas reforzadas diseñadas para el uso diario e intenso en aulas y colegios.</p>
+          <h2 className="text-xl font-bold text-blue-800 mb-2">🏭 Planta Industrial Propia y 🚚 Logística Integrada  </h2>
+          <p className="text-zinc-700">Capacidad de respuesta para pedidos de 100 a 5,000 unidades con Entrega y armado en instituciones de todo el país .</p>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-blue-800 mb-2">Capacidad Industrial</h2>
-          <p className="text-zinc-700">Volumen de producción escalable para abastecer desde pequeñas remodelaciones hasta licitaciones enteras.</p>
+          <h2 className="text-xl font-bold text-blue-800 mb-2">🛡️ Normas MEC:</h2>
+          <p className="text-zinc-700">Productos diseñados bajo las especificaciones técnicas oficiales..</p>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-blue-800 mb-2">Precios de Fábrica</h2>
-          <p className="text-zinc-700">Trato directo sin intermediarios, optimizando el presupuesto de tu institución educativa.</p>
+          <h2 className="text-xl font-bold text-blue-800 mb-2">✅ Cero Mantenimiento</h2>
+          <p className="text-zinc-700">Polipropileno virgen de alta densidad (inyectado), no madera.</p>
         </div>
       </section>
 
