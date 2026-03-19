@@ -77,16 +77,20 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (Ultra Rápido y Silencioso)
+  // 🚀 Motor de Generación PDF (Táctica Off-Screen Móvil)
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
+      // Pequeña pausa de 300ms para asegurar que el celular cargó todos los ítems en memoria
+      await new Promise(resolve => setTimeout(resolve, 300));
+
       const canvas = await html2canvas(pdfRef.current, { 
         scale: 2, 
         useCORS: true,
         logging: false,
-        backgroundColor: "#ffffff" 
+        backgroundColor: "#ffffff",
+        windowWidth: 794 // Forzamos el ancho a hoja A4 estándar, evitando bloqueos por pantalla estrecha
       });
       
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -104,10 +108,10 @@ export default function Presupuestador() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex justify-center pb-32">
+    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex justify-center pb-32 overflow-hidden">
       
       {/* 🎛️ PANEL DE CONTROL (ÚNICA INTERFAZ VISIBLE) */}
-      <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6">
+      <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 relative z-10">
         
         <div className="text-center mb-2">
           <h2 className="text-2xl font-black text-blue-950">Terminal de Ventas B2B</h2>
@@ -227,8 +231,8 @@ export default function Presupuestador() {
         </button>
       </div>
 
-      {/* 👻 EL FANTASMA (El PDF que la máquina lee pero tú no ves) */}
-      <div className="absolute top-0 left-0 opacity-0 pointer-events-none -z-50 overflow-hidden" aria-hidden="true">
+      {/* 👻 EL FANTASMA (Técnica Off-Screen: En vez de invisible, está 10km a la izquierda) */}
+      <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }} aria-hidden="true">
         <div 
           ref={pdfRef} 
           className="bg-white shrink-0 relative"
