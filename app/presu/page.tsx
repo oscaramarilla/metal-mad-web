@@ -17,7 +17,7 @@ export default function Presupuestador() {
   const emisorSubtitulo = isCorporate ? "Industria de Mobiliario Escolar Inyectado" : "Proyectos B2B y Mobiliario Educativo";
   const emisorSiglas = isCorporate ? "MM" : "OA";
 
-  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS INCLUIDOS
+  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS
   const cuentasBancarias = isCorporate ? (
     <>
       <li><strong>Ueno Bank:</strong> Cta. Ahorro 20588348</li>
@@ -77,22 +77,22 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (Optimizado para Celulares)
+  // 🚀 Motor de Generación PDF (Ultra Rápido y Silencioso)
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
-      // Breve pausa para que React actualice la vista antes de la "foto"
+      // Pequeña pausa para asegurar que React termine de pintar el DOM
       await new Promise(resolve => setTimeout(resolve, 200));
 
       const canvas = await html2canvas(pdfRef.current, { 
-        scale: 1.5, // Bajamos la resolución un poco para que el celular no se quede sin memoria RAM
+        scale: 2, 
         useCORS: true,
         logging: false,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff" 
       });
       
-      const imgData = canvas.toDataURL("image/jpeg", 0.9); // Compresión al 90% para mayor velocidad
+      const imgData = canvas.toDataURL("image/jpeg", 1.0);
       const pdf = new jsPDF("p", "mm", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
@@ -101,20 +101,19 @@ export default function Presupuestador() {
       pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
     } catch (error) {
       console.error("Error al generar PDF:", error);
-      alert("Error al procesar. Si el error persiste, intenta refrescar la página.");
+      alert("Error al procesar el documento. Intenta de nuevo.");
     }
     setCargando(false);
   };
 
   return (
-    // Estructura en Flex: En celular se ve uno arriba de otro, en PC uno al lado del otro
-    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex flex-col lg:flex-row gap-8 pb-32">
+    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex justify-center pb-32 relative">
       
-      {/* 🎛️ PANEL DE CONTROL (Izquierda / Arriba) */}
-      <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 h-fit z-10">
+      {/* 🎛️ PANEL DE CONTROL (ÚNICA INTERFAZ VISIBLE) */}
+      <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 z-10">
         
         <div className="text-center mb-2">
-          <h2 className="text-2xl font-black text-blue-950">Terminal de Ventas</h2>
+          <h2 className="text-2xl font-black text-blue-950">Terminal de Ventas B2B</h2>
           <p className="text-sm text-zinc-500">Sistema Interno de Cotizaciones</p>
         </div>
 
@@ -158,7 +157,7 @@ export default function Presupuestador() {
           <h3 className="font-bold text-zinc-800 border-b pb-2">2. Agregar Productos</h3>
           <div className="flex flex-col gap-2">
             {baseProductos.map(prod => (
-              <button key={prod.id} onClick={() => agregarItem(prod)} className="text-left p-2 text-sm border border-blue-200 hover:bg-blue-50 rounded-lg text-blue-800 font-medium transition-colors">
+              <button key={prod.id} onClick={() => agregarItem(prod)} className="text-left p-2 text-sm border border-blue-200 hover:bg-blue-50 rounded-lg text-blue-800 font-medium">
                 + {prod.nombre}
               </button>
             ))}
@@ -225,17 +224,17 @@ export default function Presupuestador() {
         <button 
           onClick={generarPDF} 
           disabled={cargando || items.length === 0}
-          className="w-full mt-2 bg-red-600 hover:bg-red-700 disabled:bg-zinc-400 text-white font-black py-4 rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all active:scale-95 z-50 relative"
+          className="w-full mt-2 bg-red-600 hover:bg-red-700 disabled:bg-zinc-400 text-white font-black py-4 rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all active:scale-95"
         >
-          {cargando ? "Procesando..." : "📥 Descargar PDF Oficial"}
+          {cargando ? "Generando Documento..." : "📥 Descargar PDF Oficial"}
         </button>
       </div>
 
-      {/* 📄 VISTA PREVIA DEL PDF (Derecha / Abajo) - Visible y estable para el navegador */}
-      <div className="flex-1 flex justify-center overflow-x-auto">
+      {/* 👻 EL FANTASMA (Técnica Segura: Transparente en la esquina) */}
+      <div className="absolute top-0 left-0 opacity-0 pointer-events-none -z-50 overflow-hidden" aria-hidden="true">
         <div 
           ref={pdfRef} 
-          className="bg-white shadow-2xl shrink-0 relative"
+          className="bg-white shrink-0 relative"
           style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}
         >
           {/* Header del Presupuesto */}
