@@ -17,7 +17,7 @@ export default function Presupuestador() {
   const emisorSubtitulo = isCorporate ? "Industria de Mobiliario Escolar Inyectado" : "Proyectos B2B y Mobiliario Educativo";
   const emisorSiglas = isCorporate ? "MM" : "OA";
 
-  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS
+  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS (Tus datos exactos)
   const cuentasBancarias = isCorporate ? (
     <>
       <li><strong>Ueno Bank:</strong> Cta. Ahorro 20588348</li>
@@ -77,19 +77,20 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (Ultra Rápido y Silencioso)
+  // 🚀 Motor de Generación PDF (Técnica de Camuflaje Físico)
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
-      // Pequeña pausa para asegurar que React termine de pintar el DOM
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // Breve respiro para que React termine de actualizar el DOM (vital en celulares)
+      await new Promise(resolve => setTimeout(resolve, 300));
 
       const canvas = await html2canvas(pdfRef.current, { 
         scale: 2, 
         useCORS: true,
         logging: false,
-        backgroundColor: "#ffffff" 
+        backgroundColor: "#ffffff",
+        windowWidth: 794 // Ancho forzado para que no se achique en pantallas móviles
       });
       
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -99,142 +100,22 @@ export default function Presupuestador() {
       
       pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error al generar PDF:", error);
-      alert("Error al procesar el documento. Intenta de nuevo.");
+      alert("Error técnico: " + error.message); // Ahora nos dirá exactamente por qué falla si lo hace
     }
     setCargando(false);
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex justify-center pb-32 relative">
+    /* CONTENEDOR MAESTRO: Bloqueamos el scroll horizontal para ocultar el A4 */
+    <div className="relative min-h-screen w-full overflow-hidden bg-zinc-100 font-sans">
       
-      {/* 🎛️ PANEL DE CONTROL (ÚNICA INTERFAZ VISIBLE) */}
-      <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 z-10">
-        
-        <div className="text-center mb-2">
-          <h2 className="text-2xl font-black text-blue-950">Terminal de Ventas B2B</h2>
-          <p className="text-sm text-zinc-500">Sistema Interno de Cotizaciones</p>
-        </div>
-
-        {/* PANEL DE CONTROL B2B */}
-        <div className="flex flex-col items-center justify-center gap-2 bg-zinc-950 p-4 rounded-2xl border border-zinc-800 shadow-inner">
-          <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Facturar a nombre de:</p>
-          <div className="flex items-center gap-4">
-            <span className={`text-sm font-black transition-colors ${!isCorporate ? 'text-blue-500' : 'text-zinc-600'}`}>
-              Óscar Amarilla
-            </span>
-            <button 
-              type="button"
-              onClick={() => setIsCorporate(!isCorporate)}
-              className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none shadow-inner ${isCorporate ? 'bg-green-600' : 'bg-blue-600'}`}
-            >
-              <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isCorporate ? 'translate-x-8' : 'translate-x-1'}`} />
-            </button>
-            <span className={`text-sm font-black transition-colors ${isCorporate ? 'text-green-500' : 'text-zinc-600'}`}>
-              Metal Mad
-            </span>
-          </div>
-        </div>
-
-        {/* Datos del Cliente */}
-        <div className="space-y-3">
-          <h3 className="font-bold text-zinc-800 border-b pb-2">1. Datos del Cliente</h3>
-          <input type="text" placeholder="Institución / Colegio" className="w-full p-2 text-sm border rounded-lg bg-zinc-50" 
-            value={cliente.institucion} onChange={e => setCliente({...cliente, institucion: e.target.value})} />
-          <input type="text" placeholder="Nombre del Contacto" className="w-full p-2 text-sm border rounded-lg bg-zinc-50" 
-            value={cliente.contacto} onChange={e => setCliente({...cliente, contacto: e.target.value})} />
-          <div className="flex gap-2">
-            <input type="text" placeholder="RUC" className="w-1/2 p-2 text-sm border rounded-lg bg-zinc-50" 
-              value={cliente.ruc} onChange={e => setCliente({...cliente, ruc: e.target.value})} />
-            <input type="text" placeholder="Teléfono" className="w-1/2 p-2 text-sm border rounded-lg bg-zinc-50" 
-              value={cliente.telefono} onChange={e => setCliente({...cliente, telefono: e.target.value})} />
-          </div>
-        </div>
-
-        {/* Agregar Productos */}
-        <div className="space-y-3">
-          <h3 className="font-bold text-zinc-800 border-b pb-2">2. Agregar Productos</h3>
-          <div className="flex flex-col gap-2">
-            {baseProductos.map(prod => (
-              <button key={prod.id} onClick={() => agregarItem(prod)} className="text-left p-2 text-sm border border-blue-200 hover:bg-blue-50 rounded-lg text-blue-800 font-medium">
-                + {prod.nombre}
-              </button>
-            ))}
-          </div>
-
-          {/* 🪄 ÍTEM MÁGICO (Personalizado) */}
-          <div className="mt-4 p-3 bg-gradient-to-br from-zinc-50 to-zinc-100 border border-zinc-300 rounded-xl shadow-sm space-y-2">
-            <p className="text-xs font-black text-zinc-600 uppercase flex items-center gap-1">✨ Ítem Personalizado</p>
-            <input 
-              type="text" 
-              placeholder="Ej: Flete, Silla especial, Reparación..." 
-              className="w-full p-2 text-sm border border-zinc-300 rounded-lg bg-white" 
-              value={itemMagicoNombre} 
-              onChange={e => setItemMagicoNombre(e.target.value)} 
-            />
-            <div className="flex gap-2">
-              <input 
-                type="number" 
-                placeholder="Precio Unit. (Gs)" 
-                className="w-2/3 p-2 text-sm border border-zinc-300 rounded-lg bg-white" 
-                value={itemMagicoPrecio} 
-                onChange={e => setItemMagicoPrecio(e.target.value)} 
-              />
-              <button
-                onClick={() => {
-                  if(itemMagicoNombre && itemMagicoPrecio) {
-                    agregarItem({ id: Date.now(), nombre: itemMagicoNombre, precio: Number(itemMagicoPrecio) });
-                    setItemMagicoNombre("");
-                    setItemMagicoPrecio("");
-                  }
-                }}
-                className="w-1/3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg text-sm transition"
-              >
-                Añadir
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* 🛒 CARRITO MÓVIL */}
-        {items.length > 0 && (
-          <div className="space-y-3 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
-            <h3 className="font-bold text-zinc-800 text-sm border-b pb-2">3. Resumen de Cantidades</h3>
-            {items.map((item, index) => (
-              <div key={index} className="flex items-center justify-between text-sm mb-2">
-                <span className="truncate w-[45%] text-zinc-700 font-medium">{item.nombre}</span>
-                <span className="w-[20%] text-right font-mono text-xs text-zinc-500 border-b border-dashed border-zinc-300">{(item.precioUnitario).toLocaleString('es-PY')}</span>
-                <div className="flex items-center gap-2 w-[35%] justify-end">
-                  <button onClick={() => actualizarCantidad(index, item.cantidad - 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-red-600 font-bold flex items-center justify-center">-</button>
-                  <span className="w-6 text-center font-bold">{item.cantidad}</span>
-                  <button onClick={() => actualizarCantidad(index, item.cantidad + 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-green-600 font-bold flex items-center justify-center">+</button>
-                </div>
-              </div>
-            ))}
-            
-            <div className="mt-4 pt-3 border-t border-zinc-300 flex justify-between items-center">
-              <span className="font-bold text-zinc-600 uppercase text-xs">Total:</span>
-              <span className="text-xl font-black text-blue-900">Gs. {totalPresupuesto.toLocaleString('es-PY')}</span>
-            </div>
-          </div>
-        )}
-
-        {/* Botón de Descarga */}
-        <button 
-          onClick={generarPDF} 
-          disabled={cargando || items.length === 0}
-          className="w-full mt-2 bg-red-600 hover:bg-red-700 disabled:bg-zinc-400 text-white font-black py-4 rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all active:scale-95"
-        >
-          {cargando ? "Generando Documento..." : "📥 Descargar PDF Oficial"}
-        </button>
-      </div>
-
-      {/* 👻 EL FANTASMA (Técnica Segura: Transparente en la esquina) */}
-      <div className="absolute top-0 left-0 opacity-0 pointer-events-none -z-50 overflow-hidden" aria-hidden="true">
+      {/* 👻 EL FANTASMA CAMUFLADO (Capa 0: Está detrás de la interfaz, el navegador lo ve, tú no) */}
+      <div className="absolute top-0 left-0 w-full flex justify-center z-0 pointer-events-none">
         <div 
           ref={pdfRef} 
-          className="bg-white shrink-0 relative"
+          className="bg-white shrink-0 relative text-black"
           style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}
         >
           {/* Header del Presupuesto */}
@@ -326,6 +207,129 @@ export default function Presupuestador() {
               <p className="text-xs text-zinc-500">{emisorNombre}</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* 🎛️ PANEL DE CONTROL (Capa 10: Tapa por completo a la hoja A4 porque tiene fondo blanco/gris) */}
+      <div className="relative z-10 w-full min-h-screen bg-zinc-100 flex justify-center p-4 md:p-8 pb-32">
+        <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-xl border border-zinc-200 flex flex-col gap-6 h-fit">
+          
+          <div className="text-center mb-2">
+            <h2 className="text-2xl font-black text-blue-950">Terminal de Ventas B2B</h2>
+            <p className="text-sm text-zinc-500">Sistema Interno de Cotizaciones</p>
+          </div>
+
+          {/* PANEL DE CONTROL B2B */}
+          <div className="flex flex-col items-center justify-center gap-2 bg-zinc-950 p-4 rounded-2xl border border-zinc-800 shadow-inner">
+            <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Facturar a nombre de:</p>
+            <div className="flex items-center gap-4">
+              <span className={`text-sm font-black transition-colors ${!isCorporate ? 'text-blue-500' : 'text-zinc-600'}`}>
+                Óscar Amarilla
+              </span>
+              <button 
+                type="button"
+                onClick={() => setIsCorporate(!isCorporate)}
+                className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none shadow-inner ${isCorporate ? 'bg-green-600' : 'bg-blue-600'}`}
+              >
+                <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isCorporate ? 'translate-x-8' : 'translate-x-1'}`} />
+              </button>
+              <span className={`text-sm font-black transition-colors ${isCorporate ? 'text-green-500' : 'text-zinc-600'}`}>
+                Metal Mad
+              </span>
+            </div>
+          </div>
+
+          {/* Datos del Cliente */}
+          <div className="space-y-3">
+            <h3 className="font-bold text-zinc-800 border-b pb-2">1. Datos del Cliente</h3>
+            <input type="text" placeholder="Institución / Colegio" className="w-full p-2 text-sm border rounded-lg bg-zinc-50" 
+              value={cliente.institucion} onChange={e => setCliente({...cliente, institucion: e.target.value})} />
+            <input type="text" placeholder="Nombre del Contacto" className="w-full p-2 text-sm border rounded-lg bg-zinc-50" 
+              value={cliente.contacto} onChange={e => setCliente({...cliente, contacto: e.target.value})} />
+            <div className="flex gap-2">
+              <input type="text" placeholder="RUC" className="w-1/2 p-2 text-sm border rounded-lg bg-zinc-50" 
+                value={cliente.ruc} onChange={e => setCliente({...cliente, ruc: e.target.value})} />
+              <input type="text" placeholder="Teléfono" className="w-1/2 p-2 text-sm border rounded-lg bg-zinc-50" 
+                value={cliente.telefono} onChange={e => setCliente({...cliente, telefono: e.target.value})} />
+            </div>
+          </div>
+
+          {/* Agregar Productos */}
+          <div className="space-y-3">
+            <h3 className="font-bold text-zinc-800 border-b pb-2">2. Agregar Productos</h3>
+            <div className="flex flex-col gap-2">
+              {baseProductos.map(prod => (
+                <button key={prod.id} onClick={() => agregarItem(prod)} className="text-left p-2 text-sm border border-blue-200 hover:bg-blue-50 rounded-lg text-blue-800 font-medium">
+                  + {prod.nombre}
+                </button>
+              ))}
+            </div>
+
+            {/* 🪄 ÍTEM MÁGICO (Personalizado) */}
+            <div className="mt-4 p-3 bg-gradient-to-br from-zinc-50 to-zinc-100 border border-zinc-300 rounded-xl shadow-sm space-y-2">
+              <p className="text-xs font-black text-zinc-600 uppercase flex items-center gap-1">✨ Ítem Personalizado</p>
+              <input 
+                type="text" 
+                placeholder="Ej: Flete, Silla especial, Reparación..." 
+                className="w-full p-2 text-sm border border-zinc-300 rounded-lg bg-white" 
+                value={itemMagicoNombre} 
+                onChange={e => setItemMagicoNombre(e.target.value)} 
+              />
+              <div className="flex gap-2">
+                <input 
+                  type="number" 
+                  placeholder="Precio Unit. (Gs)" 
+                  className="w-2/3 p-2 text-sm border border-zinc-300 rounded-lg bg-white" 
+                  value={itemMagicoPrecio} 
+                  onChange={e => setItemMagicoPrecio(e.target.value)} 
+                />
+                <button
+                  onClick={() => {
+                    if(itemMagicoNombre && itemMagicoPrecio) {
+                      agregarItem({ id: Date.now(), nombre: itemMagicoNombre, precio: Number(itemMagicoPrecio) });
+                      setItemMagicoNombre("");
+                      setItemMagicoPrecio("");
+                    }
+                  }}
+                  className="w-1/3 bg-zinc-800 hover:bg-zinc-700 text-white font-bold rounded-lg text-sm transition"
+                >
+                  Añadir
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* 🛒 CARRITO MÓVIL */}
+          {items.length > 0 && (
+            <div className="space-y-3 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
+              <h3 className="font-bold text-zinc-800 text-sm border-b pb-2">3. Resumen de Cantidades</h3>
+              {items.map((item, index) => (
+                <div key={index} className="flex items-center justify-between text-sm mb-2">
+                  <span className="truncate w-[45%] text-zinc-700 font-medium">{item.nombre}</span>
+                  <span className="w-[20%] text-right font-mono text-xs text-zinc-500 border-b border-dashed border-zinc-300">{(item.precioUnitario).toLocaleString('es-PY')}</span>
+                  <div className="flex items-center gap-2 w-[35%] justify-end">
+                    <button onClick={() => actualizarCantidad(index, item.cantidad - 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-red-600 font-bold flex items-center justify-center">-</button>
+                    <span className="w-6 text-center font-bold">{item.cantidad}</span>
+                    <button onClick={() => actualizarCantidad(index, item.cantidad + 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-green-600 font-bold flex items-center justify-center">+</button>
+                  </div>
+                </div>
+              ))}
+              
+              <div className="mt-4 pt-3 border-t border-zinc-300 flex justify-between items-center">
+                <span className="font-bold text-zinc-600 uppercase text-xs">Total:</span>
+                <span className="text-xl font-black text-blue-900">Gs. {totalPresupuesto.toLocaleString('es-PY')}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Botón de Descarga */}
+          <button 
+            onClick={generarPDF} 
+            disabled={cargando || items.length === 0}
+            className="w-full mt-2 bg-red-600 hover:bg-red-700 disabled:bg-zinc-400 text-white font-black py-4 rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all active:scale-95"
+          >
+            {cargando ? "Generando Documento..." : "📥 Descargar PDF Oficial"}
+          </button>
         </div>
       </div>
 
