@@ -17,7 +17,7 @@ export default function Presupuestador() {
   const emisorSubtitulo = isCorporate ? "Industria de Mobiliario Escolar Inyectado" : "Proyectos B2B y Mobiliario Educativo";
   const emisorSiglas = isCorporate ? "MM" : "OA";
 
-  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS (Tus datos exactos)
+  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS
   const cuentasBancarias = isCorporate ? (
     <>
       <li><strong>Ueno Bank:</strong> Cta. Ahorro 20588348</li>
@@ -54,7 +54,6 @@ export default function Presupuestador() {
   // Estado de los items en el presupuesto
   const [items, setItems] = useState<{ id: number; nombre: string; cantidad: number; precioUnitario: number }[]>([]);
 
-  // Funciones del carrito
   const agregarItem = (producto: any) => {
     const existe = items.findIndex(item => item.id === producto.id);
     if (existe >= 0) {
@@ -77,20 +76,18 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (Técnica de Camuflaje Físico)
+  // 🚀 Motor de Generación PDF
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
-      // Breve respiro para que React termine de actualizar el DOM (vital en celulares)
       await new Promise(resolve => setTimeout(resolve, 300));
 
       const canvas = await html2canvas(pdfRef.current, { 
         scale: 2, 
         useCORS: true,
         logging: false,
-        backgroundColor: "#ffffff",
-        windowWidth: 794 // Ancho forzado para que no se achique en pantallas móviles
+        backgroundColor: "#ffffff"
       });
       
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -102,56 +99,55 @@ export default function Presupuestador() {
       pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
     } catch (error: any) {
       console.error("Error al generar PDF:", error);
-      alert("Error técnico: " + error.message); // Ahora nos dirá exactamente por qué falla si lo hace
+      alert("Error técnico: " + error.message);
     }
     setCargando(false);
   };
 
   return (
-    /* CONTENEDOR MAESTRO: Bloqueamos el scroll horizontal para ocultar el A4 */
     <div className="relative min-h-screen w-full overflow-hidden bg-zinc-100 font-sans">
       
-      {/* 👻 EL FANTASMA CAMUFLADO (Capa 0: Está detrás de la interfaz, el navegador lo ve, tú no) */}
+      {/* 👻 EL FANTASMA BLINDADO (Con colores Hexadecimales puros para evitar el error 'lab') */}
       <div className="absolute top-0 left-0 w-full flex justify-center z-0 pointer-events-none">
         <div 
           ref={pdfRef} 
-          className="bg-white shrink-0 relative text-black"
+          className="bg-[#ffffff] shrink-0 relative text-[#000000]"
           style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}
         >
           {/* Header del Presupuesto */}
-          <div className="flex justify-between items-start border-b-2 border-blue-900 pb-6 mb-6">
+          <div className="flex justify-between items-start border-b-2 border-[#1e3a8a] pb-6 mb-6">
             <div className="flex items-center gap-4">
-              <div className="w-20 h-20 bg-blue-50 rounded-lg flex items-center justify-center font-black text-xs border border-blue-200">
-                <span className="text-4xl text-blue-900 tracking-tighter italic">{emisorSiglas}</span>
+              <div className="w-20 h-20 bg-[#eff6ff] rounded-lg flex items-center justify-center font-black text-xs border border-[#bfdbfe]">
+                <span className="text-4xl text-[#1e3a8a] tracking-tighter italic">{emisorSiglas}</span>
               </div>
               <div>
-                <h1 className="text-3xl font-black text-blue-950 tracking-tighter italic">{emisorNombre}</h1>
-                <p className="text-xs text-zinc-600 font-medium">{emisorSubtitulo}</p>
-                <p className="text-[10px] text-zinc-500">RUC: {emisorRUC} | Asunción, Paraguay</p>
+                <h1 className="text-3xl font-black text-[#172554] tracking-tighter italic">{emisorNombre}</h1>
+                <p className="text-xs text-[#52525b] font-medium">{emisorSubtitulo}</p>
+                <p className="text-[10px] text-[#71717a]">RUC: {emisorRUC} | Asunción, Paraguay</p>
               </div>
             </div>
             <div className="text-right">
-              <h2 className="text-2xl font-black text-zinc-300 uppercase tracking-widest">Presupuesto</h2>
-              <p className="text-sm font-bold text-zinc-800 mt-1">Fecha: {cliente.fecha}</p>
-              <p className="text-xs text-zinc-500">Validez: 15 días</p>
+              <h2 className="text-2xl font-black text-[#d4d4d8] uppercase tracking-widest">Presupuesto</h2>
+              <p className="text-sm font-bold text-[#27272a] mt-1">Fecha: {cliente.fecha}</p>
+              <p className="text-xs text-[#71717a]">Validez: 15 días</p>
             </div>
           </div>
 
           {/* Datos del Cliente */}
-          <div className="bg-zinc-50 p-4 rounded-xl border border-zinc-200 mb-8">
-            <h3 className="text-xs font-bold text-blue-900 uppercase mb-2">Preparado para:</h3>
+          <div className="bg-[#fafafa] p-4 rounded-xl border border-[#e4e4e7] mb-8">
+            <h3 className="text-xs font-bold text-[#1e3a8a] uppercase mb-2">Preparado para:</h3>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <p><span className="font-bold text-zinc-700">Institución:</span> {cliente.institucion || "___________________"}</p>
-              <p><span className="font-bold text-zinc-700">RUC:</span> {cliente.ruc || "___________________"}</p>
-              <p><span className="font-bold text-zinc-700">Atención:</span> {cliente.contacto || "___________________"}</p>
-              <p><span className="font-bold text-zinc-700">Teléfono:</span> {cliente.telefono || "___________________"}</p>
+              <p><span className="font-bold text-[#3f3f46]">Institución:</span> {cliente.institucion || "___________________"}</p>
+              <p><span className="font-bold text-[#3f3f46]">RUC:</span> {cliente.ruc || "___________________"}</p>
+              <p><span className="font-bold text-[#3f3f46]">Atención:</span> {cliente.contacto || "___________________"}</p>
+              <p><span className="font-bold text-[#3f3f46]">Teléfono:</span> {cliente.telefono || "___________________"}</p>
             </div>
           </div>
 
           {/* Tabla de Productos */}
           <table className="w-full text-sm mb-8">
             <thead>
-              <tr className="bg-blue-950 text-white text-left">
+              <tr className="bg-[#172554] text-[#ffffff] text-left">
                 <th className="p-3 rounded-tl-lg w-16 text-center">Cant.</th>
                 <th className="p-3">Descripción del Producto</th>
                 <th className="p-3 text-right">Precio Unit. (Gs)</th>
@@ -160,11 +156,11 @@ export default function Presupuestador() {
             </thead>
             <tbody>
               {items.map((item, index) => (
-                <tr key={index} className="border-b border-zinc-100">
-                  <td className="p-2 text-center font-bold text-zinc-800">{item.cantidad}</td>
-                  <td className="p-2 font-medium text-zinc-800">{item.nombre}</td>
-                  <td className="p-2 text-right text-zinc-700">{item.precioUnitario.toLocaleString('es-PY')}</td>
-                  <td className="p-2 text-right font-bold text-zinc-900">{(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}</td>
+                <tr key={index} className="border-b border-[#f4f4f5]">
+                  <td className="p-2 text-center font-bold text-[#27272a]">{item.cantidad}</td>
+                  <td className="p-2 font-medium text-[#27272a]">{item.nombre}</td>
+                  <td className="p-2 text-right text-[#3f3f46]">{item.precioUnitario.toLocaleString('es-PY')}</td>
+                  <td className="p-2 text-right font-bold text-[#18181b]">{(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}</td>
                 </tr>
               ))}
             </tbody>
@@ -172,29 +168,29 @@ export default function Presupuestador() {
 
           {/* Totales */}
           <div className="flex justify-end mb-12">
-            <div className="w-1/2 bg-zinc-50 p-4 rounded-xl border border-zinc-200 text-right">
-              <p className="text-sm text-zinc-600 mb-1">Total IVA Incluido (10%)</p>
-              <p className="text-3xl font-black text-blue-950">Gs. {totalPresupuesto.toLocaleString('es-PY')}</p>
+            <div className="w-1/2 bg-[#fafafa] p-4 rounded-xl border border-[#e4e4e7] text-right">
+              <p className="text-sm text-[#52525b] mb-1">Total IVA Incluido (10%)</p>
+              <p className="text-3xl font-black text-[#172554]">Gs. {totalPresupuesto.toLocaleString('es-PY')}</p>
             </div>
           </div>
 
           {/* Condiciones Comerciales Legales */}
-          <div className="mt-auto pt-8 border-t border-zinc-200">
-            <h3 className="text-sm font-black text-zinc-800 uppercase tracking-widest mb-3">Términos y Condiciones Comerciales</h3>
-            <div className="grid grid-cols-2 gap-6 text-[11px] text-zinc-600 leading-relaxed">
+          <div className="mt-auto pt-8 border-t border-[#e4e4e7]">
+            <h3 className="text-sm font-black text-[#27272a] uppercase tracking-widest mb-3">Términos y Condiciones Comerciales</h3>
+            <div className="grid grid-cols-2 gap-6 text-[11px] text-[#52525b] leading-relaxed">
               <div>
-                <p className="font-bold text-zinc-800 mb-1">Cuentas Habilitadas para Transferencia:</p>
+                <p className="font-bold text-[#27272a] mb-1">Cuentas Habilitadas para Transferencia:</p>
                 <ul className="list-disc pl-4 mb-3">
                   {cuentasBancarias}
                   <li>Titular: {emisorNombre} (RUC: {emisorRUC})</li>
                 </ul>
-                <p className="font-bold text-zinc-800 mb-1">Forma de Pago:</p>
+                <p className="font-bold text-[#27272a] mb-1">Forma de Pago:</p>
                 <p>50% de anticipo para confirmación de orden y producción. 50% saldo contra entrega e instalación de la mercadería.</p>
               </div>
               <div>
-                <p className="font-bold text-zinc-800 mb-1">Plazo de Entrega:</p>
+                <p className="font-bold text-[#27272a] mb-1">Plazo de Entrega:</p>
                 <p className="mb-3">15 a 20 días hábiles a partir de la recepción del anticipo.</p>
-                <p className="font-bold text-zinc-800 mb-1">Garantía y Validez:</p>
+                <p className="font-bold text-[#27272a] mb-1">Garantía y Validez:</p>
                 <p>Muebles con garantía contra defectos de fabricación. Presupuesto válido por 15 días calendario.</p>
               </div>
             </div>
@@ -202,15 +198,15 @@ export default function Presupuestador() {
 
           {/* Firma */}
           <div className="mt-16 flex justify-center">
-            <div className="text-center w-64 border-t border-zinc-400 pt-2">
-              <p className="text-sm font-bold text-zinc-800">Dpto. Comercial</p>
-              <p className="text-xs text-zinc-500">{emisorNombre}</p>
+            <div className="text-center w-64 border-t border-[#a1a1aa] pt-2">
+              <p className="text-sm font-bold text-[#27272a]">Dpto. Comercial</p>
+              <p className="text-xs text-[#71717a]">{emisorNombre}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 🎛️ PANEL DE CONTROL (Capa 10: Tapa por completo a la hoja A4 porque tiene fondo blanco/gris) */}
+      {/* 🎛️ PANEL DE CONTROL (Capa 10) */}
       <div className="relative z-10 w-full min-h-screen bg-zinc-100 flex justify-center p-4 md:p-8 pb-32">
         <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-xl border border-zinc-200 flex flex-col gap-6 h-fit">
           
@@ -265,12 +261,12 @@ export default function Presupuestador() {
               ))}
             </div>
 
-            {/* 🪄 ÍTEM MÁGICO (Personalizado) */}
+            {/* 🪄 ÍTEM MÁGICO */}
             <div className="mt-4 p-3 bg-gradient-to-br from-zinc-50 to-zinc-100 border border-zinc-300 rounded-xl shadow-sm space-y-2">
               <p className="text-xs font-black text-zinc-600 uppercase flex items-center gap-1">✨ Ítem Personalizado</p>
               <input 
                 type="text" 
-                placeholder="Ej: Flete, Silla especial, Reparación..." 
+                placeholder="Ej: Flete, Silla especial..." 
                 className="w-full p-2 text-sm border border-zinc-300 rounded-lg bg-white" 
                 value={itemMagicoNombre} 
                 onChange={e => setItemMagicoNombre(e.target.value)} 
