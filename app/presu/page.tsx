@@ -9,6 +9,14 @@ export default function Presupuestador() {
   const pdfRef = useRef<HTMLDivElement>(null);
   const [cargando, setCargando] = useState(false);
 
+  // 👑 MODO DIOS: Interruptor de Identidad B2B
+  const [isCorporate, setIsCorporate] = useState(true);
+
+  // Variables dinámicas que cambian solas según el interruptor
+  const emisorNombre = isCorporate ? "Metal Mad E.A.S." : "Óscar Amarilla";
+  const emisorRUC = isCorporate ? "80135751-9" : "4499507-5"; // Tu RUC personal
+  const emisorSubtitulo = isCorporate ? "Industria de Mobiliario Escolar Inyectado" : "Proyectos B2B y Mobiliario Educativo";
+
   // Estado del Cliente
   const [cliente, setCliente] = useState({
     institucion: "",
@@ -23,6 +31,8 @@ export default function Presupuestador() {
     { id: 1, nombre: "Pupitre Iso ORIPLAST (Línea MEC)", precio: 285000, imagen: "/productos/1.webp" },
     { id: 2, nombre: "Conjunto STUDENT (Nivel Medio)", precio: 450000, imagen: "/productos/2.webp" },
     { id: 3, nombre: "Mesa de Trabajo Grupal Hexagonal", precio: 850000, imagen: "" },
+    // Agregamos la silla suelta para la escuela de música
+    { id: 4, nombre: "Silla Escolar Inyectada (Sola)", precio: 127000, imagen: "" }, 
   ];
 
   // Estado de los items en el presupuesto
@@ -30,7 +40,13 @@ export default function Presupuestador() {
 
   // Funciones del carrito
   const agregarItem = (producto: any) => {
-    setItems([...items, { ...producto, cantidad: 1, precioUnitario: producto.precio }]);
+    // Verifica si ya existe para sumar cantidad en vez de duplicar
+    const existe = items.findIndex(item => item.id === producto.id);
+    if (existe >= 0) {
+      actualizarCantidad(existe, items[existe].cantidad + 1);
+    } else {
+      setItems([...items, { ...producto, cantidad: 1, precioUnitario: producto.precio }]);
+    }
   };
 
   const eliminarItem = (index: number) => {
@@ -38,6 +54,7 @@ export default function Presupuestador() {
   };
 
   const actualizarCantidad = (index: number, cantidad: number) => {
+    if (cantidad < 1) return; // Evita cantidades negativas
     const nuevosItems = [...items];
     nuevosItems[index].cantidad = cantidad;
     setItems(nuevosItems);
@@ -56,6 +73,7 @@ export default function Presupuestador() {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
+      // Ocultamos temporalmente cosas que no deben ir al PDF
       const canvas = await html2canvas(pdfRef.current, { scale: 2, useCORS: true });
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
       const pdf = new jsPDF("p", "mm", "a4");
@@ -63,7 +81,7 @@ export default function Presupuestador() {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
       
       pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`Presupuesto_MetalMad_${cliente.institucion || 'Cliente'}.pdf`);
+      pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
     } catch (error) {
       console.error("Error al generar PDF:", error);
       alert("Hubo un error al generar el PDF.");
@@ -72,21 +90,38 @@ export default function Presupuestador() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex flex-col lg:flex-row gap-8">
+    // Agregamos pb-36 para dar margen inferior en móviles y liberar el botón rojo
+    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex flex-col lg:flex-row gap-8 pb-36 md:pb-8">
       
       {/* 🎛️ PANEL DE CONTROL (Izquierda) - Solo para el vendedor */}
-      <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 h-fit">
-        <div>
-          <h2 className="text-2xl font-black text-blue-950 mb-1">Generador de Presupuestos</h2>
-          <p className="text-sm text-zinc-500">Herramienta interna - Metal Mad E.A.S.</p>
+      <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 h-fit z-10">
+        
+        {/* PANEL DE CONTROL DE IDENTIDAD B2B */}
+        <div className="flex flex-col items-center justify-center gap-2 bg-zinc-950 p-4 rounded-2xl border border-zinc-800 shadow-inner">
+          <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Facturar a nombre de:</p>
+          <div className="flex items-center gap-4">
+            <span className={`text-sm font-black transition-colors ${!isCorporate ? 'text-blue-500' : 'text-zinc-600'}`}>
+              Óscar Amarilla
+            </span>
+            <button 
+              type="button"
+              onClick={() => setIsCorporate(!isCorporate)}
+              className={`relative inline-flex h-7 w-14 items-center rounded-full transition-colors focus:outline-none shadow-inner ${isCorporate ? 'bg-green-600' : 'bg-blue-600'}`}
+            >
+              <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${isCorporate ? 'translate-x-8' : 'translate-x-1'}`} />
+            </button>
+            <span className={`text-sm font-black transition-colors ${isCorporate ? 'text-green-500' : 'text-zinc-600'}`}>
+              Metal Mad
+            </span>
+          </div>
         </div>
 
         {/* Datos del Cliente */}
         <div className="space-y-3">
           <h3 className="font-bold text-zinc-800 border-b pb-2">1. Datos del Cliente</h3>
-          <input type="text" placeholder="Institución / Colegio" className="w-full p-2 text-sm border rounded-lg bg-zinc-50" 
+          <input type="text" placeholder="Institución / Colegio" className="w-full p-2 text-sm border rounded-lg bg-zinc-50 focus:ring-2 focus:ring-blue-500" 
             value={cliente.institucion} onChange={e => setCliente({...cliente, institucion: e.target.value})} />
-          <input type="text" placeholder="Nombre del Contacto" className="w-full p-2 text-sm border rounded-lg bg-zinc-50" 
+          <input type="text" placeholder="Nombre del Contacto" className="w-full p-2 text-sm border rounded-lg bg-zinc-50 focus:ring-2 focus:ring-blue-500" 
             value={cliente.contacto} onChange={e => setCliente({...cliente, contacto: e.target.value})} />
           <div className="flex gap-2">
             <input type="text" placeholder="RUC" className="w-1/2 p-2 text-sm border rounded-lg bg-zinc-50" 
@@ -101,18 +136,35 @@ export default function Presupuestador() {
           <h3 className="font-bold text-zinc-800 border-b pb-2">2. Agregar Productos</h3>
           <div className="flex flex-col gap-2">
             {baseProductos.map(prod => (
-              <button key={prod.id} onClick={() => agregarItem(prod)} className="text-left p-2 text-sm border border-blue-200 hover:bg-blue-50 rounded-lg text-blue-800 transition-colors">
+              <button key={prod.id} onClick={() => agregarItem(prod)} className="text-left p-2 text-sm border border-blue-200 hover:bg-blue-50 rounded-lg text-blue-800 transition-colors font-medium">
                 + {prod.nombre}
               </button>
             ))}
           </div>
         </div>
 
+        {/* 🛒 CARRITO MÓVIL (Soluciona el problema de editar en el celular) */}
+        {items.length > 0 && (
+          <div className="space-y-3 bg-zinc-50 p-3 rounded-xl border border-zinc-200">
+            <h3 className="font-bold text-zinc-800 text-sm border-b pb-2">3. Resumen de Cantidades</h3>
+            {items.map((item, index) => (
+              <div key={index} className="flex items-center justify-between text-sm">
+                <span className="truncate w-1/2 text-zinc-700 font-medium">{item.nombre}</span>
+                <div className="flex items-center gap-2">
+                  <button onClick={() => actualizarCantidad(index, item.cantidad - 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-red-600 font-bold">-</button>
+                  <span className="w-6 text-center font-bold">{item.cantidad}</span>
+                  <button onClick={() => actualizarCantidad(index, item.cantidad + 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-green-600 font-bold">+</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Botón de Descarga */}
         <button 
           onClick={generarPDF} 
           disabled={cargando || items.length === 0}
-          className="w-full mt-4 bg-red-600 hover:bg-red-700 disabled:bg-zinc-400 text-white font-black py-4 rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all active:scale-95"
+          className="w-full mt-2 bg-red-600 hover:bg-red-700 disabled:bg-zinc-400 text-white font-black py-4 rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all active:scale-95 z-50 relative"
         >
           {cargando ? "Generando Documento..." : "📥 Descargar PDF Oficial"}
         </button>
@@ -124,19 +176,23 @@ export default function Presupuestador() {
         <div 
           ref={pdfRef} 
           className="bg-white shadow-2xl shrink-0 relative"
-          style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }} // Medidas exactas A4
+          style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}
         >
-          {/* Header del Presupuesto */}
+          {/* Header del Presupuesto Dinámico */}
           <div className="flex justify-between items-start border-b-2 border-blue-900 pb-6 mb-6">
             <div className="flex items-center gap-4">
-              {/* Espacio para el Logo Real */}
-              <div className="w-20 h-20 bg-zinc-200 rounded-lg flex items-center justify-center font-black text-xs text-zinc-500 overflow-hidden relative">
-                <Image src="/logo.webp" alt="Metal Mad Logo" fill className="object-contain" />
+              <div className="w-20 h-20 bg-zinc-100 rounded-lg flex items-center justify-center font-black text-xs text-zinc-500 overflow-hidden relative border border-zinc-200">
+                {/* Si es Metal Mad muestra el logo, si es personal muestra iniciales */}
+                {isCorporate ? (
+                  <Image src="/logo.webp" alt="Logo" fill className="object-contain p-1" />
+                ) : (
+                  <span className="text-2xl text-blue-900">OA</span>
+                )}
               </div>
               <div>
-                <h1 className="text-3xl font-black text-blue-950 tracking-tighter italic">Metal Mad E.A.S.</h1>
-                <p className="text-xs text-zinc-600 font-medium">Industria de Mobiliario Escolar Inyectado</p>
-                <p className="text-[10px] text-zinc-500">RUC: 80132145-6 | Asunción, Paraguay</p>
+                <h1 className="text-3xl font-black text-blue-950 tracking-tighter italic">{emisorNombre}</h1>
+                <p className="text-xs text-zinc-600 font-medium">{emisorSubtitulo}</p>
+                <p className="text-[10px] text-zinc-500">RUC: {emisorRUC} | Asunción, Paraguay</p>
               </div>
             </div>
             <div className="text-right">
@@ -157,7 +213,7 @@ export default function Presupuestador() {
             </div>
           </div>
 
-          {/* Tabla de Productos */}
+          {/* Tabla de Productos en el PDF */}
           <table className="w-full text-sm mb-8">
             <thead>
               <tr className="bg-blue-950 text-white text-left">
@@ -165,7 +221,6 @@ export default function Presupuestador() {
                 <th className="p-3">Descripción del Producto</th>
                 <th className="p-3 text-right">Precio Unit. (Gs)</th>
                 <th className="p-3 text-right rounded-tr-lg">Total (Gs)</th>
-                {/* Columna fantasma para el botón de borrar (No sale en PDF por CSS) */}
                 <th className="w-8 data-html2canvas-ignore"></th> 
               </tr>
             </thead>
@@ -175,12 +230,12 @@ export default function Presupuestador() {
               ) : (
                 items.map((item, index) => (
                   <tr key={index} className="border-b border-zinc-100">
-                    <td className="p-2 text-center">
-                      <input type="number" value={item.cantidad} onChange={e => actualizarCantidad(index, Number(e.target.value))} className="w-12 text-center border rounded bg-transparent font-bold" />
+                    <td className="p-2 text-center font-bold text-zinc-800">
+                      {item.cantidad}
                     </td>
                     <td className="p-2 font-medium text-zinc-800">{item.nombre}</td>
-                    <td className="p-2 text-right">
-                      <input type="number" value={item.precioUnitario} onChange={e => actualizarPrecio(index, Number(e.target.value))} className="w-24 text-right border-b border-dashed border-zinc-300 bg-transparent" />
+                    <td className="p-2 text-right text-zinc-700">
+                      {item.precioUnitario.toLocaleString('es-PY')}
                     </td>
                     <td className="p-2 text-right font-bold text-zinc-900">
                       {(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}
@@ -204,7 +259,7 @@ export default function Presupuestador() {
             </div>
           </div>
 
-          {/* Condiciones Comerciales Legales (Inyectadas de MoviAula) */}
+          {/* Condiciones Comerciales Legales */}
           <div className="mt-auto pt-8 border-t border-zinc-200">
             <h3 className="text-sm font-black text-zinc-800 uppercase tracking-widest mb-3">Términos y Condiciones Comerciales</h3>
             <div className="grid grid-cols-2 gap-6 text-[11px] text-zinc-600 leading-relaxed">
@@ -213,25 +268,25 @@ export default function Presupuestador() {
                 <ul className="list-disc pl-4 mb-3">
                   <li>50% de anticipo para confirmación de orden y producción.</li>
                   <li>50% saldo contra entrega e instalación de la mercadería.</li>
-                  <li>Se aceptan transferencias bancarias y cheques vía depósito.</li>
+                  <li>Transferencias a la cuenta a nombre de {emisorNombre} (RUC: {emisorRUC}).</li>
                 </ul>
                 <p className="font-bold text-zinc-800 mb-1">Plazo de Entrega:</p>
                 <p>15 a 20 días hábiles a partir de la recepción del anticipo, sujeto a disponibilidad de stock y volumen del pedido.</p>
               </div>
               <div>
                 <p className="font-bold text-zinc-800 mb-1">Garantía de Fábrica:</p>
-                <p className="mb-3">Todos nuestros muebles inyectados cuentan con garantía contra defectos de fabricación en estructuras metálicas y plásticos, bajo condiciones de uso normal escolar.</p>
+                <p className="mb-3">Todos nuestros muebles cuentan con garantía contra defectos de fabricación en estructuras y plásticos.</p>
                 <p className="font-bold text-zinc-800 mb-1">Validez de Oferta:</p>
-                <p>El presente presupuesto tiene una validez de 15 días calendario. Los precios pueden sufrir ajustes sin previo aviso superado este plazo.</p>
+                <p>El presente presupuesto tiene una validez de 15 días calendario.</p>
               </div>
             </div>
           </div>
 
-          {/* Firma */}
+          {/* Firma Dinámica */}
           <div className="mt-16 flex justify-center">
             <div className="text-center w-64 border-t border-zinc-400 pt-2">
               <p className="text-sm font-bold text-zinc-800">Dpto. Comercial</p>
-              <p className="text-xs text-zinc-500">Metal Mad E.A.S.</p>
+              <p className="text-xs text-zinc-500">{emisorNombre}</p>
             </div>
           </div>
 
