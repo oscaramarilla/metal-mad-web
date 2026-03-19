@@ -3,6 +3,8 @@
 import { useState, useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+// 📡 IMPORTAMOS EL SENSOR DE VERCEL ANALYTICS
+import { track } from '@vercel/analytics'; 
 
 export default function Presupuestador() {
   const pdfRef = useRef<HTMLDivElement>(null);
@@ -97,6 +99,14 @@ export default function Presupuestador() {
       
       pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
       pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
+      
+      // 📡 SENSOR INYECTADO: Avisa a Vercel que se descargó un presupuesto
+      track('Cotizacion_Generada', { 
+        facturador: isCorporate ? 'Metal Mad' : 'Oscar Amarilla',
+        total_gs: totalPresupuesto,
+        cantidad_items: items.length
+      });
+
     } catch (error: any) {
       console.error("Error al generar PDF:", error);
       alert("Error técnico: " + error.message);
