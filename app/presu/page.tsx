@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-// Quitamos la importación de 'next/image' porque usaremos la etiqueta nativa para evitar el error del PDF
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -64,18 +63,20 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (Corregido)
+  // 🚀 Motor de Generación PDF (BLINDADO)
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
-      // Configuramos html2canvas para que no bloquee las imágenes
+      // Configuramos html2canvas con la escala correcta y sin el "allowTaint" que bloqueaba la descarga
       const canvas = await html2canvas(pdfRef.current, { 
         scale: 2, 
         useCORS: true,
-        allowTaint: true,
-        logging: false
+        logging: false,
+        windowWidth: pdfRef.current.scrollWidth, // Fuerza a leer el div completo aunque estés en celular
+        windowHeight: pdfRef.current.scrollHeight
       });
+      
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
       const pdf = new jsPDF("p", "mm", "a4");
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -85,7 +86,7 @@ export default function Presupuestador() {
       pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
     } catch (error) {
       console.error("Error al generar PDF:", error);
-      alert("Hubo un error al generar el PDF. Revisa la consola.");
+      alert("Error. Intenta de nuevo.");
     }
     setCargando(false);
   };
@@ -215,8 +216,8 @@ export default function Presupuestador() {
             <div className="flex items-center gap-4">
               <div className="w-20 h-20 bg-zinc-100 rounded-lg flex items-center justify-center font-black text-xs text-zinc-500 overflow-hidden relative border border-zinc-200">
                 {isCorporate ? (
-                  // ¡LA SOLUCIÓN! Usamos la etiqueta img nativa en vez de next/image
-                  <img src="/logo.webp" alt="Logo" crossOrigin="anonymous" className="w-full h-full object-contain p-1" />
+                  /* 🚨 FIX: Imagen nativa limpia sin etiquetas raras */
+                  <img src="/logo.webp" alt="Logo" className="w-full h-full object-contain p-1" />
                 ) : (
                   <span className="text-2xl text-blue-900">OA</span>
                 )}
