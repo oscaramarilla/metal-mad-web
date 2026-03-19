@@ -15,7 +15,20 @@ export default function Presupuestador() {
   const emisorNombre = isCorporate ? "Metal Mad E.A.S." : "Óscar Amarilla";
   const emisorRUC = isCorporate ? "80135751-9" : "4499507-5"; 
   const emisorSubtitulo = isCorporate ? "Industria de Mobiliario Escolar Inyectado" : "Proyectos B2B y Mobiliario Educativo";
-  const emisorSiglas = isCorporate ? "MM" : "OA"; 
+  const emisorSiglas = isCorporate ? "MM" : "OA";
+
+  // 🏦 LÓGICA BANCARIA DINÁMICA CON ALIAS
+  const cuentasBancarias = isCorporate ? (
+    <>
+      <li><strong>Ueno Bank:</strong> Cta. Ahorro 20588348</li>
+      <li><strong>Banco Interfisa:</strong> Cta. Ahorro 259080186</li>
+    </>
+  ) : (
+    <>
+      <li><strong>Banco Itaú:</strong> Cta. 720601573 (Alias: 0985864209)</li>
+      <li><strong>Ueno Bank:</strong> Cta. 61932582 (Alias: 4499507)</li>
+    </>
+  );
 
   // Estado del Cliente
   const [cliente, setCliente] = useState({
@@ -64,7 +77,7 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (Blindado contra errores Lab/CORS)
+  // 🚀 Motor de Generación PDF (Ultra Rápido y Silencioso)
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
@@ -73,9 +86,7 @@ export default function Presupuestador() {
         scale: 2, 
         useCORS: true,
         logging: false,
-        backgroundColor: "#ffffff", 
-        windowWidth: pdfRef.current.scrollWidth,
-        windowHeight: pdfRef.current.scrollHeight
+        backgroundColor: "#ffffff" 
       });
       
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -216,100 +227,100 @@ export default function Presupuestador() {
         </button>
       </div>
 
-      {/* 👻 EL FANTASMA (El PDF puro de errores. Usamos puros HEX Codes inline) */}
+      {/* 👻 EL FANTASMA (El PDF que la máquina lee pero tú no ves) */}
       <div className="absolute top-0 left-0 opacity-0 pointer-events-none -z-50 overflow-hidden" aria-hidden="true">
         <div 
           ref={pdfRef} 
-          style={{ width: '210mm', minHeight: '297mm', padding: '15mm', backgroundColor: '#ffffff', color: '#18181b', fontFamily: 'sans-serif' }}
+          className="bg-white shrink-0 relative"
+          style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}
         >
           {/* Header del Presupuesto */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #1e3a8a', paddingBottom: '24px', marginBottom: '24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <div style={{ width: '80px', height: '80px', backgroundColor: '#eff6ff', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #bfdbfe' }}>
-                <span style={{ fontSize: '36px', color: '#1e3a8a', fontWeight: '900', fontStyle: 'italic', letterSpacing: '-0.05em' }}>{emisorSiglas}</span>
+          <div className="flex justify-between items-start border-b-2 border-blue-900 pb-6 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 bg-blue-50 rounded-lg flex items-center justify-center font-black text-xs border border-blue-200">
+                <span className="text-4xl text-blue-900 tracking-tighter italic">{emisorSiglas}</span>
               </div>
               <div>
-                <h1 style={{ fontSize: '30px', fontWeight: '900', color: '#172554', fontStyle: 'italic', margin: 0, letterSpacing: '-0.05em' }}>{emisorNombre}</h1>
-                <p style={{ fontSize: '12px', color: '#52525b', fontWeight: '500', margin: '4px 0' }}>{emisorSubtitulo}</p>
-                <p style={{ fontSize: '10px', color: '#71717a', margin: 0 }}>RUC: {emisorRUC} | Asunción, Paraguay</p>
+                <h1 className="text-3xl font-black text-blue-950 tracking-tighter italic">{emisorNombre}</h1>
+                <p className="text-xs text-zinc-600 font-medium">{emisorSubtitulo}</p>
+                <p className="text-[10px] text-zinc-500">RUC: {emisorRUC} | Asunción, Paraguay</p>
               </div>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#d4d4d8', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>Presupuesto</h2>
-              <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#27272a', marginTop: '4px', marginBottom: 0 }}>Fecha: {cliente.fecha}</p>
-              <p style={{ fontSize: '12px', color: '#71717a', margin: 0 }}>Validez: 15 días</p>
+            <div className="text-right">
+              <h2 className="text-2xl font-black text-zinc-300 uppercase tracking-widest">Presupuesto</h2>
+              <p className="text-sm font-bold text-zinc-800 mt-1">Fecha: {cliente.fecha}</p>
+              <p className="text-xs text-zinc-500">Validez: 15 días</p>
             </div>
           </div>
 
           {/* Datos del Cliente */}
-          <div style={{ backgroundColor: '#fafafa', padding: '16px', borderRadius: '12px', border: '1px solid #e4e4e7', marginBottom: '32px' }}>
-            <h3 style={{ fontSize: '12px', fontWeight: 'bold', color: '#1e3a8a', textTransform: 'uppercase', marginBottom: '8px', marginTop: 0 }}>Preparado para:</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '14px' }}>
-              <p style={{ margin: 0 }}><span style={{ fontWeight: 'bold', color: '#3f3f46' }}>Institución:</span> {cliente.institucion || "___________________"}</p>
-              <p style={{ margin: 0 }}><span style={{ fontWeight: 'bold', color: '#3f3f46' }}>RUC:</span> {cliente.ruc || "___________________"}</p>
-              <p style={{ margin: 0 }}><span style={{ fontWeight: 'bold', color: '#3f3f46' }}>Atención:</span> {cliente.contacto || "___________________"}</p>
-              <p style={{ margin: 0 }}><span style={{ fontWeight: 'bold', color: '#3f3f46' }}>Teléfono:</span> {cliente.telefono || "___________________"}</p>
+          <div className="bg-zinc-50 p-4 rounded-xl border border-zinc-200 mb-8">
+            <h3 className="text-xs font-bold text-blue-900 uppercase mb-2">Preparado para:</h3>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <p><span className="font-bold text-zinc-700">Institución:</span> {cliente.institucion || "___________________"}</p>
+              <p><span className="font-bold text-zinc-700">RUC:</span> {cliente.ruc || "___________________"}</p>
+              <p><span className="font-bold text-zinc-700">Atención:</span> {cliente.contacto || "___________________"}</p>
+              <p><span className="font-bold text-zinc-700">Teléfono:</span> {cliente.telefono || "___________________"}</p>
             </div>
           </div>
 
           {/* Tabla de Productos */}
-          <table style={{ width: '100%', fontSize: '14px', marginBottom: '32px', borderCollapse: 'collapse' }}>
+          <table className="w-full text-sm mb-8">
             <thead>
-              <tr style={{ backgroundColor: '#172554', color: '#ffffff', textAlign: 'left' }}>
-                <th style={{ padding: '12px', width: '60px', textAlign: 'center', borderTopLeftRadius: '8px' }}>Cant.</th>
-                <th style={{ padding: '12px' }}>Descripción del Producto</th>
-                <th style={{ padding: '12px', textAlign: 'right' }}>Precio Unit. (Gs)</th>
-                <th style={{ padding: '12px', textAlign: 'right', borderTopRightRadius: '8px' }}>Total (Gs)</th>
+              <tr className="bg-blue-950 text-white text-left">
+                <th className="p-3 rounded-tl-lg w-16 text-center">Cant.</th>
+                <th className="p-3">Descripción del Producto</th>
+                <th className="p-3 text-right">Precio Unit. (Gs)</th>
+                <th className="p-3 text-right rounded-tr-lg">Total (Gs)</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item, index) => (
-                <tr key={index} style={{ borderBottom: '1px solid #f4f4f5' }}>
-                  <td style={{ padding: '8px', textAlign: 'center', fontWeight: 'bold', color: '#27272a' }}>{item.cantidad}</td>
-                  <td style={{ padding: '8px', fontWeight: '500', color: '#27272a' }}>{item.nombre}</td>
-                  <td style={{ padding: '8px', textAlign: 'right', color: '#3f3f46' }}>{item.precioUnitario.toLocaleString('es-PY')}</td>
-                  <td style={{ padding: '8px', textAlign: 'right', fontWeight: 'bold', color: '#18181b' }}>{(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}</td>
+                <tr key={index} className="border-b border-zinc-100">
+                  <td className="p-2 text-center font-bold text-zinc-800">{item.cantidad}</td>
+                  <td className="p-2 font-medium text-zinc-800">{item.nombre}</td>
+                  <td className="p-2 text-right text-zinc-700">{item.precioUnitario.toLocaleString('es-PY')}</td>
+                  <td className="p-2 text-right font-bold text-zinc-900">{(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}</td>
                 </tr>
               ))}
             </tbody>
           </table>
 
           {/* Totales */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '48px' }}>
-            <div style={{ width: '50%', backgroundColor: '#fafafa', padding: '16px', borderRadius: '12px', border: '1px solid #e4e4e7', textAlign: 'right' }}>
-              <p style={{ fontSize: '14px', color: '#52525b', marginBottom: '4px', marginTop: 0 }}>Total IVA Incluido (10%)</p>
-              <p style={{ fontSize: '30px', fontWeight: '900', color: '#172554', margin: 0 }}>Gs. {totalPresupuesto.toLocaleString('es-PY')}</p>
+          <div className="flex justify-end mb-12">
+            <div className="w-1/2 bg-zinc-50 p-4 rounded-xl border border-zinc-200 text-right">
+              <p className="text-sm text-zinc-600 mb-1">Total IVA Incluido (10%)</p>
+              <p className="text-3xl font-black text-blue-950">Gs. {totalPresupuesto.toLocaleString('es-PY')}</p>
             </div>
           </div>
 
           {/* Condiciones Comerciales Legales */}
-          <div style={{ paddingTop: '32px', borderTop: '1px solid #e4e4e7', marginTop: 'auto' }}>
-            <h3 style={{ fontSize: '14px', fontWeight: '900', color: '#27272a', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '12px', marginTop: 0 }}>Términos y Condiciones Comerciales</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', fontSize: '11px', color: '#52525b', lineHeight: '1.6' }}>
+          <div className="mt-auto pt-8 border-t border-zinc-200">
+            <h3 className="text-sm font-black text-zinc-800 uppercase tracking-widest mb-3">Términos y Condiciones Comerciales</h3>
+            <div className="grid grid-cols-2 gap-6 text-[11px] text-zinc-600 leading-relaxed">
               <div>
-                <p style={{ fontWeight: 'bold', color: '#27272a', marginBottom: '4px', marginTop: 0 }}>Forma de Pago:</p>
-                <ul style={{ paddingLeft: '16px', marginBottom: '12px', marginTop: 0 }}>
-                  <li>50% de anticipo para confirmación de orden y producción.</li>
-                  <li>50% saldo contra entrega e instalación de la mercadería.</li>
-                  <li>Transferencias a la cuenta a nombre de {emisorNombre} (RUC: {emisorRUC}).</li>
+                <p className="font-bold text-zinc-800 mb-1">Cuentas Habilitadas para Transferencia:</p>
+                <ul className="list-disc pl-4 mb-3">
+                  {cuentasBancarias}
+                  <li>Titular: {emisorNombre} (RUC: {emisorRUC})</li>
                 </ul>
-                <p style={{ fontWeight: 'bold', color: '#27272a', marginBottom: '4px', marginTop: 0 }}>Plazo de Entrega:</p>
-                <p style={{ margin: 0 }}>15 a 20 días hábiles a partir de la recepción del anticipo.</p>
+                <p className="font-bold text-zinc-800 mb-1">Forma de Pago:</p>
+                <p>50% de anticipo para confirmación de orden y producción. 50% saldo contra entrega e instalación de la mercadería.</p>
               </div>
               <div>
-                <p style={{ fontWeight: 'bold', color: '#27272a', marginBottom: '4px', marginTop: 0 }}>Garantía de Fábrica:</p>
-                <p style={{ marginBottom: '12px', marginTop: 0 }}>Muebles con garantía contra defectos de fabricación en estructuras y plásticos.</p>
-                <p style={{ fontWeight: 'bold', color: '#27272a', marginBottom: '4px', marginTop: 0 }}>Validez de Oferta:</p>
-                <p style={{ margin: 0 }}>Presupuesto con validez de 15 días calendario.</p>
+                <p className="font-bold text-zinc-800 mb-1">Plazo de Entrega:</p>
+                <p className="mb-3">15 a 20 días hábiles a partir de la recepción del anticipo.</p>
+                <p className="font-bold text-zinc-800 mb-1">Garantía y Validez:</p>
+                <p>Muebles con garantía contra defectos de fabricación. Presupuesto válido por 15 días calendario.</p>
               </div>
             </div>
           </div>
 
           {/* Firma */}
-          <div style={{ marginTop: '64px', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ textAlign: 'center', width: '256px', borderTop: '1px solid #a1a1aa', paddingTop: '8px' }}>
-              <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#27272a', margin: 0 }}>Dpto. Comercial</p>
-              <p style={{ fontSize: '12px', color: '#71717a', margin: 0 }}>{emisorNombre}</p>
+          <div className="mt-16 flex justify-center">
+            <div className="text-center w-64 border-t border-zinc-400 pt-2">
+              <p className="text-sm font-bold text-zinc-800">Dpto. Comercial</p>
+              <p className="text-xs text-zinc-500">{emisorNombre}</p>
             </div>
           </div>
         </div>
