@@ -15,6 +15,7 @@ export default function Presupuestador() {
   const emisorNombre = isCorporate ? "Metal Mad E.A.S." : "Óscar Amarilla";
   const emisorRUC = isCorporate ? "80135751-9" : "4499507-5"; 
   const emisorSubtitulo = isCorporate ? "Industria de Mobiliario Escolar Inyectado" : "Proyectos B2B y Mobiliario Educativo";
+  const emisorSiglas = isCorporate ? "MM" : "OA"; // <-- Siglas para el logo en puro texto
 
   // Estado del Cliente
   const [cliente, setCliente] = useState({
@@ -63,18 +64,16 @@ export default function Presupuestador() {
 
   const totalPresupuesto = items.reduce((acc, item) => acc + item.cantidad * item.precioUnitario, 0);
 
-  // 🚀 Motor de Generación PDF (BLINDADO)
+  // 🚀 Motor de Generación PDF (Ultra Rápido y Silencioso)
   const generarPDF = async () => {
     if (!pdfRef.current) return;
     setCargando(true);
     try {
-      // Configuramos html2canvas con la escala correcta y sin el "allowTaint" que bloqueaba la descarga
       const canvas = await html2canvas(pdfRef.current, { 
         scale: 2, 
         useCORS: true,
         logging: false,
-        windowWidth: pdfRef.current.scrollWidth, // Fuerza a leer el div completo aunque estés en celular
-        windowHeight: pdfRef.current.scrollHeight
+        backgroundColor: "#ffffff" // Fuerza fondo blanco
       });
       
       const imgData = canvas.toDataURL("image/jpeg", 1.0);
@@ -86,17 +85,22 @@ export default function Presupuestador() {
       pdf.save(`Presupuesto_${isCorporate ? 'MetalMad' : 'OscarAmarilla'}_${cliente.institucion || 'Cliente'}.pdf`);
     } catch (error) {
       console.error("Error al generar PDF:", error);
-      alert("Error. Intenta de nuevo.");
+      alert("Error al procesar el documento. Intenta de nuevo.");
     }
     setCargando(false);
   };
 
   return (
-    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex flex-col lg:flex-row gap-8 pb-36 md:pb-8">
+    <div className="min-h-screen bg-zinc-100 p-4 md:p-8 font-sans flex justify-center pb-32">
       
-      {/* 🎛️ PANEL DE CONTROL (Izquierda) */}
-      <div className="w-full lg:w-1/3 bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6 h-fit z-10">
+      {/* 🎛️ PANEL DE CONTROL (ÚNICA INTERFAZ VISIBLE) */}
+      <div className="w-full max-w-lg bg-white p-6 rounded-3xl shadow-lg border border-zinc-200 flex flex-col gap-6">
         
+        <div className="text-center mb-2">
+          <h2 className="text-2xl font-black text-blue-950">Terminal de Ventas B2B</h2>
+          <p className="text-sm text-zinc-500">Sistema Interno de Cotizaciones</p>
+        </div>
+
         {/* PANEL DE CONTROL B2B */}
         <div className="flex flex-col items-center justify-center gap-2 bg-zinc-950 p-4 rounded-2xl border border-zinc-800 shadow-inner">
           <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Facturar a nombre de:</p>
@@ -183,14 +187,20 @@ export default function Presupuestador() {
             <h3 className="font-bold text-zinc-800 text-sm border-b pb-2">3. Resumen de Cantidades</h3>
             {items.map((item, index) => (
               <div key={index} className="flex items-center justify-between text-sm mb-2">
-                <span className="truncate w-1/2 text-zinc-700 font-medium">{item.nombre}</span>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => actualizarCantidad(index, item.cantidad - 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-red-600 font-bold">-</button>
+                <span className="truncate w-[45%] text-zinc-700 font-medium">{item.nombre}</span>
+                <span className="w-[20%] text-right font-mono text-xs text-zinc-500 border-b border-dashed border-zinc-300">{(item.precioUnitario).toLocaleString('es-PY')}</span>
+                <div className="flex items-center gap-2 w-[35%] justify-end">
+                  <button onClick={() => actualizarCantidad(index, item.cantidad - 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-red-600 font-bold flex items-center justify-center">-</button>
                   <span className="w-6 text-center font-bold">{item.cantidad}</span>
-                  <button onClick={() => actualizarCantidad(index, item.cantidad + 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-green-600 font-bold">+</button>
+                  <button onClick={() => actualizarCantidad(index, item.cantidad + 1)} className="w-7 h-7 bg-white border rounded shadow-sm text-green-600 font-bold flex items-center justify-center">+</button>
                 </div>
               </div>
             ))}
+            
+            <div className="mt-4 pt-3 border-t border-zinc-300 flex justify-between items-center">
+              <span className="font-bold text-zinc-600 uppercase text-xs">Total:</span>
+              <span className="text-xl font-black text-blue-900">Gs. {totalPresupuesto.toLocaleString('es-PY')}</span>
+            </div>
           </div>
         )}
 
@@ -204,23 +214,19 @@ export default function Presupuestador() {
         </button>
       </div>
 
-      {/* 📄 VISTA PREVIA DEL PDF (Derecha) */}
-      <div className="flex-1 flex justify-center overflow-x-auto">
+      {/* 👻 EL FANTASMA (El PDF que la máquina lee pero tú no ves) */}
+      <div className="absolute top-0 left-0 opacity-0 pointer-events-none -z-50 overflow-hidden" aria-hidden="true">
         <div 
           ref={pdfRef} 
-          className="bg-white shadow-2xl shrink-0 relative"
+          className="bg-white shrink-0 relative"
           style={{ width: '210mm', minHeight: '297mm', padding: '15mm' }}
         >
-          {/* Header del Presupuesto Dinámico */}
+          {/* Header del Presupuesto */}
           <div className="flex justify-between items-start border-b-2 border-blue-900 pb-6 mb-6">
             <div className="flex items-center gap-4">
-              <div className="w-20 h-20 bg-zinc-100 rounded-lg flex items-center justify-center font-black text-xs text-zinc-500 overflow-hidden relative border border-zinc-200">
-                {isCorporate ? (
-                  /* 🚨 FIX: Imagen nativa limpia sin etiquetas raras */
-                  <img src="/logo.webp" alt="Logo" className="w-full h-full object-contain p-1" />
-                ) : (
-                  <span className="text-2xl text-blue-900">OA</span>
-                )}
+              <div className="w-20 h-20 bg-blue-50 rounded-lg flex items-center justify-center font-black text-xs border border-blue-200">
+                {/* 🚨 FIX: Puro CSS y Texto, imposible que falle al descargar */}
+                <span className="text-4xl text-blue-900 tracking-tighter italic">{emisorSiglas}</span>
               </div>
               <div>
                 <h1 className="text-3xl font-black text-blue-950 tracking-tighter italic">{emisorNombre}</h1>
@@ -254,25 +260,17 @@ export default function Presupuestador() {
                 <th className="p-3">Descripción del Producto</th>
                 <th className="p-3 text-right">Precio Unit. (Gs)</th>
                 <th className="p-3 text-right rounded-tr-lg">Total (Gs)</th>
-                <th className="w-8 data-html2canvas-ignore"></th> 
               </tr>
             </thead>
             <tbody>
-              {items.length === 0 ? (
-                <tr><td colSpan={4} className="text-center py-8 text-zinc-400 italic">Agregue productos desde el panel izquierdo...</td></tr>
-              ) : (
-                items.map((item, index) => (
-                  <tr key={index} className="border-b border-zinc-100">
-                    <td className="p-2 text-center font-bold text-zinc-800">{item.cantidad}</td>
-                    <td className="p-2 font-medium text-zinc-800">{item.nombre}</td>
-                    <td className="p-2 text-right text-zinc-700">{item.precioUnitario.toLocaleString('es-PY')}</td>
-                    <td className="p-2 text-right font-bold text-zinc-900">{(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}</td>
-                    <td className="p-2 text-center" data-html2canvas-ignore>
-                      <button onClick={() => eliminarItem(index)} className="text-red-500 hover:text-red-700 font-bold">X</button>
-                    </td>
-                  </tr>
-                ))
-              )}
+              {items.map((item, index) => (
+                <tr key={index} className="border-b border-zinc-100">
+                  <td className="p-2 text-center font-bold text-zinc-800">{item.cantidad}</td>
+                  <td className="p-2 font-medium text-zinc-800">{item.nombre}</td>
+                  <td className="p-2 text-right text-zinc-700">{item.precioUnitario.toLocaleString('es-PY')}</td>
+                  <td className="p-2 text-right font-bold text-zinc-900">{(item.cantidad * item.precioUnitario).toLocaleString('es-PY')}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
@@ -316,6 +314,7 @@ export default function Presupuestador() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
