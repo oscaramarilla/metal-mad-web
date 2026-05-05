@@ -75,7 +75,7 @@ export default function ModularKFunnelPage() {
             <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl shadow-neutral-900/50 border border-neutral-800">
               {/* Esta imagen debe ser image_2.jpg (convertida a webp) */}
               <img 
-                src="/path/to/your/image_2.webp" // Reemplazar por la ruta real de tu webp
+                src="/modulo-k.webp" 
                 alt="Demostración visual del Efecto Termo del Modular K con cámara térmica"
                 className="w-full h-full object-cover"
               />
