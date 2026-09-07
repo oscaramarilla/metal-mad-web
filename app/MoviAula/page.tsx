@@ -60,13 +60,13 @@ export default function MoviAulaPage() {
       {/* 1. CABECERA: Psicología de Ventas (Estatus y Seguridad) */}
       <header className="w-full max-w-5xl px-6 pt-12 lg:pt-20 pb-12 text-center">
         <span className="text-sm font-bold tracking-widest text-green-600 uppercase mb-4 block">
-          Calculadora de Inversión Institucional
+          Estimación de Inversión Institucional
         </span>
         <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tight text-blue-900 mb-6">
-          Equipa tu colegio con tecnología inyectada
+          Calcula una estimación para tu proyecto educativo
         </h1>
         <p className="text-lg leading-8 text-zinc-600 max-w-3xl mx-auto">
-          Las decisiones de compra educativa no son un gasto, son una inversión en durabilidad y prestigio. Selecciona la línea que mejor se adapte a tu proyecto y obtén un presupuesto transparente, directo de fábrica.
+          Las decisiones de compra educativa no son un gasto, son una inversión en durabilidad y prestigio. Selecciona la línea que mejor se adapte a tu proyecto y recibe una estimación inicial directo de fábrica.
         </p>
       </header>
 
@@ -208,7 +208,7 @@ export default function MoviAulaPage() {
             
             <div className="mb-6">
               <span className="bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full uppercase tracking-widest">
-                Presupuesto Oficial
+                Estimación preliminar
               </span>
             </div>
 
