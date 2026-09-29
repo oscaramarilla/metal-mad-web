@@ -15,6 +15,7 @@ export default function Navbar() {
     { name: "Mobiliario", href: "/Mobiliario" },
     { name: "Catálogo", href: "/catalogo" }, // <-- Recuperado
     { name: "MoviAula", href: "/MoviAula" },
+    { name: "PinturaElectro", href: "/pinturaelectro" },
     { name: "Blog", href: "/blog" },
     { name: "Nosotros", href: "/Nosotros" }, // <-- Recuperado
     { name: "Impacto Social", href: "/impacto-social", special: true },
